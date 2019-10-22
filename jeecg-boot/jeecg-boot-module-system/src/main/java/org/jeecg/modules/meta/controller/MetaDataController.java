@@ -9,6 +9,7 @@ import java.net.URLDecoder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.jeecg.common.api.vo.Result;
+import org.jeecg.common.aspect.annotation.PermissionData;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.util.oConvertUtils;
@@ -48,7 +49,7 @@ import io.swagger.annotations.ApiOperation;
 public class MetaDataController {
 	@Autowired
 	private IMetaDataService metaDataService;
-	
+
 	/**
 	  * 分页列表查询
 	 * @param metaData
@@ -60,6 +61,7 @@ public class MetaDataController {
 	@AutoLog(value = "元数据-分页列表查询")
 	@ApiOperation(value="元数据-分页列表查询", notes="元数据-分页列表查询")
 	@GetMapping(value = "/list")
+	@PermissionData(pageComponent="jeecg/MetaDataList")
 	public Result<IPage<MetaData>> queryPageList(MetaData metaData,
 									  @RequestParam(name="pageNo", defaultValue="1") Integer pageNo,
 									  @RequestParam(name="pageSize", defaultValue="10") Integer pageSize,
@@ -72,7 +74,22 @@ public class MetaDataController {
 		result.setResult(pageList);
 		return result;
 	}
-	
+	 @AutoLog(value = "元数据-分页列表查询")
+	 @ApiOperation(value="元数据-分页列表查询", notes="元数据-分页列表查询")
+	 @GetMapping(value = "/listclient")
+	 @PermissionData(pageComponent="jeecg/MetaDataListclient")
+	 public Result<IPage<MetaData>> queryPageList2(MetaData metaData,
+												  @RequestParam(name="pageNo", defaultValue="1") Integer pageNo,
+												  @RequestParam(name="pageSize", defaultValue="10") Integer pageSize,
+												  HttpServletRequest req) {
+		 Result<IPage<MetaData>> result = new Result<IPage<MetaData>>();
+		 QueryWrapper<MetaData> queryWrapper = QueryGenerator.initQueryWrapper(metaData, req.getParameterMap());
+		 Page<MetaData> page = new Page<MetaData>(pageNo, pageSize);
+		 IPage<MetaData> pageList = metaDataService.page(page, queryWrapper);
+		 result.setSuccess(true);
+		 result.setResult(pageList);
+		 return result;
+	 }
 	/**
 	  *   添加
 	 * @param metaData

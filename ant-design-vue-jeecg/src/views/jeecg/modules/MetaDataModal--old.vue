@@ -15,37 +15,37 @@
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="产品名称">
-          <a-input placeholder="请输入产品名称" v-decorator="['productName', {}]" />
+          <a-input :disabled="isDisabledAuth('provider')" placeholder="请输入产品名称" v-decorator="['productName', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="供应商名称">
-          <a-input placeholder="请输入供应商名称" v-decorator="['supplierName', {}]" />
+          <a-input :disabled="isDisabledAuth('provider')" placeholder="请输入供应商名称" v-decorator="['supplierName', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="供应商地址">
-          <a-input placeholder="请输入供应商地址" v-decorator="['supplierAddress', {}]" />
+          <a-input :disabled="isDisabledAuth('provider')" placeholder="请输入供应商地址" v-decorator="['supplierAddress', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="联系方式">
-          <a-input placeholder="请输入联系方式" v-decorator="['contact', {}]" />
+          <a-input :disabled="isDisabledAuth('provider')" placeholder="请输入联系方式" v-decorator="['contact', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="产品版本号">
-          <a-input placeholder="请输入产品版本号" v-decorator="['version', {}]" />
+          <a-input :disabled="isDisabledAuth('provider')" placeholder="请输入产品版本号" v-decorator="['version', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="上一版本号">
-          <a-input placeholder="请输入上一版本号" v-decorator="['previousVersion', {}]" />
+          <a-input :disabled="isDisabledAuth('provider')" placeholder="请输入上一版本号" v-decorator="['previousVersion', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
