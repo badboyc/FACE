@@ -6,7 +6,7 @@
       <a-form layout="inline">
         <a-row :gutter="24">
 
-          <!--<a-col :md="6" :sm="8">
+          <a-col :md="6" :sm="8">
             <a-form-item label="产品名称">
               <a-input placeholder="请输入产品名称" v-model="queryParam.productName"></a-input>
             </a-form-item>
@@ -15,7 +15,7 @@
             <a-form-item label="供应商名称">
               <a-input placeholder="请输入供应商名称" v-model="queryParam.supplierName"></a-input>
             </a-form-item>
-          </a-col>-->
+          </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="6" :sm="8">
               <a-form-item label="审核状态">
@@ -327,9 +327,6 @@
         this.$refs.modalForm.disableSubmit = false;
       },
       handleRemoveapply:function (record){
-        if(record.versionStatus=='2'){
-          return this.$message.success('已申请移除成功，请勿重复申请！');
-        }
         this.$refs.modalForm.editstatus (record);
         this.$refs.modalForm.disableSubmit = false;
         this.$refs.modalForm.handleOkstatus (2);

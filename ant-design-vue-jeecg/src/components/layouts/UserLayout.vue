@@ -4,12 +4,12 @@
       <div class="top">
         <div class="header">
           <a href="/">
-            <img src="~@/assets/logo.svg" class="logo" alt="logo">
-            <span class="title">机载软件可移植单元</span>
+            <img src="~@/assets/logo.png" class="logo" alt="logo">
+            <!--<span class="title">西北工业大学</span>-->
           </a>
         </div>
-        <div class="desc">
-
+        <div class="desc" style="font-size: 33px">
+          西北工业大学计算机学院服务计算教研室
         </div>
       </div>
 
@@ -22,7 +22,7 @@
           <a href="https://github.com/zhangdaiscott/jeecg-boot" target="_blank">条款</a>
         </div>
         <div class="copyright">
-          Copyright &copy; 2019 <a href="http://www.jeecg.org" target="_blank">306实验室</a> 出品
+          Copyright &copy; 2019 <a href="http://www.jeecg.org" target="_blank">计算机学院服务计算教研室</a> 出品
         </div>
       </div>
     </div>

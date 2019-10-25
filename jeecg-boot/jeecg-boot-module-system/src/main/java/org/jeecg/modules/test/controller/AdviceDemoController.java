@@ -61,7 +61,7 @@ public class AdviceDemoController {
 	@AutoLog(value = "测试2-分页列表查询")
 	@ApiOperation(value="测试2-分页列表查询", notes="测试2-分页列表查询")
 	@GetMapping(value = "/admin-list")
-	@PermissionData(pageComponent="appeal/AdviceDemoList")
+	@PermissionData(pageComponent="jeecg/AdviceDemoList")
 	public Result<IPage<AdviceDemo>> queryPageList(AdviceDemo adviceDemo,
 												   @RequestParam(name="pageNo", defaultValue="1") Integer pageNo,
 												   @RequestParam(name="pageSize", defaultValue="10") Integer pageSize,
@@ -78,7 +78,7 @@ public class AdviceDemoController {
 	@AutoLog(value = "测试2-分页列表查询")
 	@ApiOperation(value="测试2-分页列表查询", notes="测试2-分页列表查询")
 	@GetMapping(value = "/user-list")
-	@PermissionData(pageComponent="appeal/AdviceDemoListU")
+	@PermissionData(pageComponent="jeecg/AdviceDemoListU")
 	public Result<IPage<AdviceDemo>> queryPageList2(AdviceDemo adviceDemo,
 													@RequestParam(name="pageNo", defaultValue="1") Integer pageNo,
 													@RequestParam(name="pageSize", defaultValue="10") Integer pageSize,

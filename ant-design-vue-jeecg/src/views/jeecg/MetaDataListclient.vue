@@ -6,7 +6,7 @@
       <a-form layout="inline">
         <a-row :gutter="24">
 
-          <!--<a-col :md="6" :sm="8">
+          <a-col :md="6" :sm="8">
             <a-form-item label="产品名称">
               <a-input placeholder="请输入产品名称" v-model="queryParam.productName"></a-input>
             </a-form-item>
@@ -15,7 +15,7 @@
             <a-form-item label="供应商名称">
               <a-input placeholder="请输入供应商名称" v-model="queryParam.supplierName"></a-input>
             </a-form-item>
-          </a-col>-->
+          </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="6" :sm="8">
               <a-form-item label="审核状态">
@@ -245,14 +245,14 @@
           //     align:"center",
           //     dataIndex: 'licenseCategory'
           //    },
-          {
-               title: '版本状态',
-               align:"center",
-               dataIndex: 'versionStatus',
-              customRender:(text, record, index) => {
-              return filterDictText(this.versionstatus,text);
-            }
-          },
+          //{
+            //   title: '版本状态',
+              // align:"center",
+               //dataIndex: 'versionStatus',
+              //customRender:(text, record, index) => {
+              //return filterDictText(this.versionstatus,text);
+            //}
+          //},
           {
             title: '审核状态',
             align:"center",
@@ -274,7 +274,7 @@
           }
         ],
         url: {
-          list: "/meta/metaData/list",
+          list: "/meta/metaData/listclient",
           delete: "/meta/metaData/delete",
           deleteBatch: "/meta/metaData/deleteBatch",
           exportXlsUrl: "meta/metaData/exportXls",
