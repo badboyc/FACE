@@ -28,7 +28,7 @@
 
         <template v-if="!model.id">
           <a-form-item label="登陆密码" :labelCol="labelCol" :wrapperCol="wrapperCol" >
-            <a-input type="password" placeholder="请输入登陆密码" v-decorator="[ 'password', validatorRules.password]" />
+            <a-input type="password" placeholder="请输入登陆密码" v-decorator="[ 'password', validatorRules.password]"/>
           </a-form-item>
 
           <a-form-item label="确认密码" :labelCol="labelCol" :wrapperCol="wrapperCol" >
@@ -164,19 +164,27 @@
           },
           password:{
             rules: [{
-              required: true,
-              pattern:/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,./]).{8,}$/,
-              message: '密码由8位数字、大小写字母和特殊符号组成!'
+            //   required: true,
+            //   pattern:/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,./]).{8,}$/,
+            //   message: '密码由8位数字、大小写字母和特殊符号组成!'
+            // }, {
+            //   validator: this.validateToNextPassword,
+            // }],
+                required: true,
+                //pattern:/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,./]).{8,}$/,
+                message: '初始默认密码6个0!'
             }, {
-              validator: this.validateToNextPassword,
+                //validator: this.validateToNextPassword,
             }],
+              initialValue: '000000'
           },
           confirmpassword:{
             rules: [{
-              required: true, message: '请重新输入登陆密码!',
+              required: true, message: '初始默认密码6个0',
             }, {
-              validator: this.compareToFirstPassword,
+              //validator: this.compareToFirstPassword,
             }],
+              initialValue: '000000'
           },
           realname:{rules: [{ required: true, message: '请输入用户名称!' }]},
           phone:{rules: [{validator: this.validatePhone}]},
