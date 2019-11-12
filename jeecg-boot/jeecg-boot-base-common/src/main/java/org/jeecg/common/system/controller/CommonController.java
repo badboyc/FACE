@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.jeecg.common.api.vo.Result;
+import org.jeecg.common.aspect.annotation.AutoLog;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.FileCopyUtils;
@@ -51,7 +52,7 @@ public class CommonController {
 	public Result<?> noauth()  {
 		return Result.error("没有权限，请联系管理员授权");
 	}
-	
+	@AutoLog(value = "上传文件")
 	@PostMapping(value = "/upload")
 	public Result<?> upload(HttpServletRequest request, HttpServletResponse response) {
 		Result<?> result = new Result<>();
@@ -145,6 +146,7 @@ public class CommonController {
 	 * @param response
 	 * @throws Exception 
 	 */
+	@AutoLog(value = "下载文件")
 	@GetMapping(value = "/download/**")
 	public void download(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// ISO-8859-1 ==> UTF-8 进行编码转换

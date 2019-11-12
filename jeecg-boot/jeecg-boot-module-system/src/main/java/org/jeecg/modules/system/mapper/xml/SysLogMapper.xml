@@ -14,7 +14,7 @@
 
 	<!-- 获取今日访问总数 -->
     <select id="findTodayVisitCount" resultType="long">
-        select count(1) from sys_log where log_type = 1 and create_time &gt;= #{dayStart} and create_time &lt; #{dayEnd}
+         select count(1) from sys_log where log_type = 1 and create_time &gt;= #{dayStart} and create_time &lt; #{dayEnd}
     </select>
     
 	<!-- 获取今日访问总IP数 -->

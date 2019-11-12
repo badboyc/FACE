@@ -53,7 +53,7 @@ public interface CommonConstant {
 	public static final int OPERATE_TYPE_4 = 4;
 	
 	/**
-	 * 操作日志类型： 倒入
+	 * 操作日志类型： 导入
 	 */
 	public static final int OPERATE_TYPE_5 = 5;
 	
@@ -61,7 +61,14 @@ public interface CommonConstant {
 	 * 操作日志类型： 导出
 	 */
 	public static final int OPERATE_TYPE_6 = 6;
-	
+    /**
+     * 操作日志类型： 下载
+     */
+    public static final int OPERATE_TYPE_7 = 7;
+    /**
+     * 操作日志类型： 上传
+     */
+    public static final int OPERATE_TYPE_8 = 8;
 	
 	/** {@code 500 Server Error} (HTTP/1.0 - RFC 1945) */
     public static final Integer SC_INTERNAL_SERVER_ERROR_500 = 500;

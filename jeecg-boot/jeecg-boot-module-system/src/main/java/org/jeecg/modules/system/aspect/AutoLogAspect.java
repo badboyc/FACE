@@ -22,6 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
+import org.springframework.util.AntPathMatcher;
+import org.springframework.web.servlet.HandlerMapping;
 
 
 /**
@@ -66,7 +68,6 @@ public class AutoLogAspect {
 			//注解上的描述,操作日志内容
 			sysLog.setLogContent(syslog.value());
 			sysLog.setLogType(syslog.logType());
-			
 		}
 
 		//请求的方法名
@@ -83,8 +84,14 @@ public class AutoLogAspect {
 		//请求的参数
 		Object[] args = joinPoint.getArgs();
 		try{
+			if(sysLog.getOperateType()==CommonConstant.OPERATE_TYPE_7){
+				HttpServletRequest request = SpringContextUtils.getHttpServletRequest();
+				String filePath = extractPathFromPattern(request);
+				sysLog.setRequestParam(filePath);
+			}
+			else{
 			String params = JSONObject.toJSONString(args);
-			sysLog.setRequestParam(params);
+			sysLog.setRequestParam(params);}
 		}catch (Exception e){
 
 		}
@@ -106,6 +113,10 @@ public class AutoLogAspect {
 		sysLog.setCreateTime(new Date());
 		//保存系统日志
 		sysLogService.save(sysLog);
+	}private static String extractPathFromPattern(final HttpServletRequest request) {
+		String path = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
+		String bestMatchPattern = (String) request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
+		return new AntPathMatcher().extractPathWithinPattern(bestMatchPattern, path);
 	}
 	/**
 	 * 获取操作类型
@@ -131,6 +142,12 @@ public class AutoLogAspect {
 		}
         if (methodName.startsWith("export")) {
         	return CommonConstant.OPERATE_TYPE_6;
+		}
+		if (methodName.startsWith("download")) {
+			return CommonConstant.OPERATE_TYPE_7;
+		}
+		if (methodName.startsWith("upload")) {
+			return CommonConstant.OPERATE_TYPE_8;
 		}
 		return CommonConstant.OPERATE_TYPE_1;
 	}
