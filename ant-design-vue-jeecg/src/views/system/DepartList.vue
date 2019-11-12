@@ -168,7 +168,7 @@
       return {
         iExpandedKeys: [],
         loading: false,
-        autoExpandParent: true,
+        autoExpandParent: false,
         currFlowId: '',
         currFlowName: '',
         disable: true,
@@ -417,10 +417,10 @@
           this.$refs.departModal.title = '新增'
         } else if (num == 2) {
           let key = this.currSelected.key
-          if (!key) {
-            this.$message.warning('请先选中一条记录!')
-            return false
-          }
+          //if (key) {
+            //this.$message.warning('请先选中一条记录!')
+            //return false
+          //}
           this.$refs.departModal.add(this.selectedKeys)
           this.$refs.departModal.title = '新增'
         } else {
