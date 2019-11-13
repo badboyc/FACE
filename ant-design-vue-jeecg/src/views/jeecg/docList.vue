@@ -121,7 +121,9 @@
   import ShowDetail from './modules/ShowDetail'
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
   import { getAction } from '@/api/manage'
-
+  import { ACCESS_TOKEN } from "@/store/mutation-types"
+  import Vue from 'vue'
+  import { axios } from '@/utils/request'
   export default {
     name: "docList",
     mixins:[JeecgListMixin],
@@ -200,6 +202,10 @@
        },
     }
   },
+    created(){
+      const token = Vue.ls.get(ACCESS_TOKEN);
+      this.headers = {"X-Access-Token":token}
+    },
     computed: {
       importExcelUrl: function(){
         return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
@@ -221,7 +227,23 @@
       },
 
       handleDownload: function (value) {
-        window.open(value.downloadpath)
+        //window.open(value.downloadpath)
+        axios.get(value.downloadpath, {
+          responseType: 'arraybuffer', // 或者responseType: 'blob'
+          xsrfHeaderName: 'Authorization',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + Vue.ls.get(ACCESS_TOKEN),
+          }
+        }).then(res => {
+          const blob = new Blob([res.data], {
+            type: 'application/vnd.ms-excel'
+          })
+          const objectUrl = URL.createObjectURL(blob)
+          window.location.href = objectUrl
+        }).catch(err => {
+          console.log(err)
+        })
       },
     }
   }

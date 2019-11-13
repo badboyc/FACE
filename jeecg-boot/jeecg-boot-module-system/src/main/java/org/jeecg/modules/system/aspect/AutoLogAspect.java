@@ -16,6 +16,8 @@ import org.jeecg.common.constant.CommonConstant;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.util.IPUtils;
 import org.jeecg.common.util.SpringContextUtils;
+import org.jeecg.modules.meta.service.IMetaDataService;
+import org.jeecg.modules.meta.service.impl.MetaDataServiceImpl;
 import org.jeecg.modules.system.entity.SysLog;
 import org.jeecg.modules.system.service.ISysLogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,7 @@ import org.springframework.web.servlet.HandlerMapping;
 @Aspect
 @Component
 public class AutoLogAspect {
+    private IMetaDataService metaDataService=new MetaDataServiceImpl();
 	@Autowired
 	private ISysLogService sysLogService;
 	
@@ -86,8 +89,9 @@ public class AutoLogAspect {
 		try{
 			if(sysLog.getOperateType()==CommonConstant.OPERATE_TYPE_7){
 				HttpServletRequest request = SpringContextUtils.getHttpServletRequest();
-				String filePath = extractPathFromPattern(request);
-				sysLog.setRequestParam(filePath);
+				String url = request.getRequestURL().toString();//extractPathFromPattern(request);
+                sysLog.setRequestParam(url);
+				metaDataService.countPlus(url);
 			}
 			else{
 			String params = JSONObject.toJSONString(args);

@@ -13,5 +13,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @Version: V1.0
  */
 public interface MetaDataMapper extends BaseMapper<MetaData> {
+    /**
+     * @功能：统计下载次数
+     */
+    public void countPlus(@Param("url")String url);
 
 }

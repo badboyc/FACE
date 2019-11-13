@@ -124,4 +124,8 @@ public class MetaData {
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(value = "审核时间")
 	private Date updateTime;
+	/**下载量统计*/
+	@Excel(name = "下载量统计", width = 15)
+	@ApiModelProperty(value = "下载量统计")
+	private String downloadCount;
 }

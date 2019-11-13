@@ -15,5 +15,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
  */
 @Service
 public class MetaDataServiceImpl extends ServiceImpl<MetaDataMapper, MetaData> implements IMetaDataService {
+   private MetaDataMapper metaDataMapper;
+    /**
+     * @功能：统计下载次数
+     */
+    @Override
+    public void countPlus(String url){metaDataMapper.countPlus(url);};
 
 }

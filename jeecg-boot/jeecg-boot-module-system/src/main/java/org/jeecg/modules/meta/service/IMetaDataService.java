@@ -10,5 +10,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @Version: V1.0
  */
 public interface IMetaDataService extends IService<MetaData> {
+    /**
+     * @功能：统计下载次数
+     */
+    public void countPlus(String url);
 
 }

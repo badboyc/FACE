@@ -48,6 +48,9 @@
 
 <script>
     import DetailList from '@/components/tools/DetailList'
+    import { ACCESS_TOKEN } from "@/store/mutation-types"
+    import Vue from 'vue'
+    import { axios } from '@/utils/request'
     const DetailListItem = DetailList.Item
     export default {
       name: "ShowDetail",
@@ -101,10 +104,29 @@
             handleCancel(e) {
                 this.visible = false
             },
+          handleDownload: function (value) {
+            //window.open(value.downloadpath)
+            axios.get(value.downloadpath, {
+              responseType: 'arraybuffer', // 或者responseType: 'blob'
+              xsrfHeaderName: 'Authorization',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + Vue.ls.get(ACCESS_TOKEN),
+              }
+            }).then(res => {
+              const blob = new Blob([res.data], {
+                type: 'application/vnd.ms-excel'
+              })
+              const objectUrl = URL.createObjectURL(blob)
+              window.location.href = objectUrl
+            }).catch(err => {
+              console.log(err)
+            })
+          },
 
-            handleDownload: function (value) {
-                window.open(value.downloadpath)
-            },
+            //handleDownload: function (value) {
+              //  window.open(value.downloadpath)
+           // },
 
             getFilename(record){
                 let url = record.downloadpath;
