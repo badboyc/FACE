@@ -314,28 +314,28 @@
         });
         this.$refs.showmeta.detail(record);
       },
-      handleDownload: function (value) {
-        //window.open(value.downloadpath)
-        axios.get(value.uocPackageUrl, {
-          responseType: 'arraybuffer', // 或者responseType: 'blob'
-          xsrfHeaderName: 'Authorization',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + Vue.ls.get(ACCESS_TOKEN),
-          }
-        }).then(res => {
-          const blob = new Blob([res.data], {
-            type: 'application/vnd.ms-excel'
-          })
-          const objectUrl = URL.createObjectURL(blob)
-          window.location.href = objectUrl
-        }).catch(err => {
-          console.log(err)
-        })
+      // handleDownload: function (value) {
+      //   //window.open(value.downloadpath)
+      //   axios.get(value.uocPackageUrl, {
+      //     responseType: 'arraybuffer', // 或者responseType: 'blob'
+      //     xsrfHeaderName: 'Authorization',
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //       'Authorization': 'Bearer ' + Vue.ls.get(ACCESS_TOKEN),
+      //     }
+      //   }).then(res => {
+      //     const blob = new Blob([res.data], {
+      //      // type: 'application/vnd.ms-excel'
+      //     })
+      //     const objectUrl = URL.createObjectURL(blob)
+      //     window.location.href = objectUrl
+      //   }).catch(err => {
+      //     console.log(err)
+      //   })
+      // },
+     handleDownload: function (value) {
+       window.open(value.uocPackageUrl)
       },
-     // handleDownload: function (value) {
-       // window.open(value.uocPackageUrl)
-      //},
       handleAdd: function () {
         this.$refs.modalForm.add();
         this.$refs.modalForm.title = "发布";

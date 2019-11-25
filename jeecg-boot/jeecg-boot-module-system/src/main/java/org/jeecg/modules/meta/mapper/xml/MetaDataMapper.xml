@@ -3,7 +3,6 @@
 <mapper namespace="org.jeecg.modules.meta.mapper.MetaDataMapper">
     <!--  统计下载量 -->
     <update id="countPlus">
-		UPDATE metadata SET download_count = download_count+1 where UoC_package_url = #{url}
+		UPDATE metadata SET download_count = download_count+1 where UoC_package_url = #{uocPackageUrl}
 	</update>
-
 </mapper>

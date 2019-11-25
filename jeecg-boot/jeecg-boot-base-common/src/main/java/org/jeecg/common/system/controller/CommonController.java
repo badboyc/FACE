@@ -17,16 +17,14 @@ import org.jeecg.common.aspect.annotation.AutoLog;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.extern.slf4j.Slf4j;
+
 
 /**
  * <p>
@@ -151,6 +149,7 @@ public class CommonController {
 	public void download(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// ISO-8859-1 ==> UTF-8 进行编码转换
 		String filePath = extractPathFromPattern(request);
+
 		// 其余处理略
 		InputStream inputStream = null;
 		OutputStream outputStream = null;
@@ -173,6 +172,13 @@ public class CommonController {
 	 				outputStream.write(buf, 0, len);
 	 			}
 	 			response.flushBuffer();
+	 			//下载次数加一
+				 //*********************这是一条分割线**************************
+				/* public void countDownload(@RequestBody doc doc){
+					 System.out.println(doc);
+					 docService.countDocPlus("http://127.0.0.1:8080/jeecg-boot/sys/common/download/files/20191115/测试用例_1573821041483.txt");
+				 }*/
+				 //*********************这是一条分割线**************************
 	         }
 			
 		} catch (Exception e) {

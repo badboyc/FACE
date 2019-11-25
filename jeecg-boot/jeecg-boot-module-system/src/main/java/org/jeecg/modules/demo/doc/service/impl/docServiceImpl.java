@@ -3,6 +3,7 @@ package org.jeecg.modules.demo.doc.service.impl;
 import org.jeecg.modules.demo.doc.entity.doc;
 import org.jeecg.modules.demo.doc.mapper.docMapper;
 import org.jeecg.modules.demo.doc.service.IdocService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -15,5 +16,13 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
  */
 @Service
 public class docServiceImpl extends ServiceImpl<docMapper, doc> implements IdocService {
+    @Autowired
+    private docMapper docMapper;
+
+    @Override
+    public void countDocPlus(String downloadPath) {
+        docMapper.countDocPlus(downloadPath);
+    }
+
 
 }

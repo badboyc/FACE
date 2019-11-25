@@ -10,5 +10,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @Version: V1.0
  */
 public interface IdocService extends IService<doc> {
-
+    public void countDocPlus(String downloadPath);
 }

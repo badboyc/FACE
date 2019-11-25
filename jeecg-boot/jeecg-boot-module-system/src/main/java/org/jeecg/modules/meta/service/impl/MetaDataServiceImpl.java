@@ -3,6 +3,7 @@ package org.jeecg.modules.meta.service.impl;
 import org.jeecg.modules.meta.entity.MetaData;
 import org.jeecg.modules.meta.mapper.MetaDataMapper;
 import org.jeecg.modules.meta.service.IMetaDataService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -15,11 +16,14 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
  */
 @Service
 public class MetaDataServiceImpl extends ServiceImpl<MetaDataMapper, MetaData> implements IMetaDataService {
-   private MetaDataMapper metaDataMapper;
+   @Autowired
+    private MetaDataMapper metaDataMapper;
     /**
      * @功能：统计下载次数
      */
     @Override
-    public void countPlus(String url){metaDataMapper.countPlus(url);};
+    public void countPlus(String uocPackageUrl) {
+        metaDataMapper.countPlus(uocPackageUrl);
+    }
 
 }
