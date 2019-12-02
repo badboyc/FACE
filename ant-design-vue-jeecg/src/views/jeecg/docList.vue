@@ -82,7 +82,7 @@
         :dataSource="dataSource"
         :pagination="ipagination"
         :loading="loading"
-        :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
+        :rowSelection="{selectedRowKeys: selectedRowKeys,onChange: onSelectChange}"
         @change="handleTableChange">
 
         <span slot="action" slot-scope="text, record">
@@ -161,6 +161,12 @@
             align:"center",
             dataIndex: 'type'
            },
+            {
+                title: '下载量',
+                align:"center",
+                dataIndex: 'downloadCount',
+                sorter: true
+            },
 		   {
             title: '版本',
             align:"center",
@@ -246,6 +252,7 @@
       //   })
       // },
       handleDownload: function (value) {
+          console.log(value);
           window.open(value.downloadpath);
       },
     }

@@ -214,7 +214,8 @@
           edit: "/meta/metaData/edit",
         },
         uploadAction:window._CONFIG['domianURL']+"/sys/common/upload",
-        urlDownload:window._CONFIG['domianURL'] + "/sys/common/download/",
+        //urlDownload:window._CONFIG['domianURL'] + "/sys/common/download/",
+        urlDownload:window._CONFIG['domianURL'] + "/sys/download/download/",
         headers:{},
         fileList: [],
         uocPackageUrl:''
