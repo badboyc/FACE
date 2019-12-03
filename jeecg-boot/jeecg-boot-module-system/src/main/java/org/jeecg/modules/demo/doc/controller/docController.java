@@ -48,6 +48,13 @@ import io.swagger.annotations.ApiOperation;
 public class docController {
 	@Autowired
 	private IdocService docService;
+
+	 @PostMapping(value="/downloadUrl")
+	 public void countDocPlus(@RequestBody doc doc){
+	 	//使用postman测试下载完成后下载量加一
+		 System.out.println(doc);
+		 docService.countDocPlus("http://127.0.0.1:8080/jeecg-boot/sys/common/download/files/20191115/测试用例_1573821041483.txt");
+	 }
 	
 	/**
 	  * 分页列表查询

@@ -181,6 +181,12 @@
             align:"center",
             dataIndex: 'createBy'
           },
+            {
+                title: '下载量',
+                align:"center",
+                dataIndex: 'downloadCount',
+                sorter: true
+            },
           {
             title: '创建时间',
             align:"center",

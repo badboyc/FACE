@@ -84,4 +84,7 @@ public class doc {
 	@Excel(name = "删除标识0-正常,1-已删除", width = 15)
     @ApiModelProperty(value = "删除标识0-正常,1-已删除")
 	private Integer delFlag;
+	@Excel(name = "下载量统计", width = 15)
+	@ApiModelProperty(value = "下载量统计")
+	private String downloadCount;
 }

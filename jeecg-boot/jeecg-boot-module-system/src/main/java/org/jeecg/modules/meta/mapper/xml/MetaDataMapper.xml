@@ -2,8 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.jeecg.modules.meta.mapper.MetaDataMapper">
     <!--  统计下载量 -->
-    <update id="countPlus">
-		UPDATE metadata SET download_count = download_count+1 where UoC_package_url = #{url}
+    <update id="countPlus" parameterType="String">
+		UPDATE metadata SET download_count = download_count+1 where UoC_package_url like '%${uocPackageUrl}%'
 	</update>
-
 </mapper>

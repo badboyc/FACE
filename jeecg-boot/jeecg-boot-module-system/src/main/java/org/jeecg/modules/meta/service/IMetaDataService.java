@@ -13,6 +13,6 @@ public interface IMetaDataService extends IService<MetaData> {
     /**
      * @功能：统计下载次数
      */
-    public void countPlus(String url);
+    public void countPlus(String uocPackageUrl);
 
 }

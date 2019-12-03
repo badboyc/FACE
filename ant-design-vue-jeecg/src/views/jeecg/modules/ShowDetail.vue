@@ -105,11 +105,24 @@
                 this.visible = false
             },
           handleDownload: function (value) {
-            var btn = document.createElement("a");
-            // btn.setAttribute('download', filename);// download属性
-            btn.setAttribute('href', value.downloadpath);// href链接
-            btn.click();//自执行点击事件
-          },
+            window.open(value.downloadpath)
+          //   axios.get(value.downloadpath, {
+              //     responseType: 'arraybuffer', // 或者responseType: 'blob'
+              //     xsrfHeaderName: 'Authorization',
+              //     headers: {
+              //       'Content-Type': 'application/json',
+              //       'Authorization': 'Bearer ' + Vue.ls.get(ACCESS_TOKEN),
+              //     }
+              //   }).then(res => {
+              //     const blob = new Blob([res.data], {
+              //       type: 'application/vnd.ms-excel'
+              //     })
+              //     const objectUrl = URL.createObjectURL(blob)
+              //     window.location.href = objectUrl
+              //   }).catch(err => {
+              //     console.log(err)
+              //   })
+              },
 
             //handleDownload: function (value) {
               //  window.open(value.downloadpath)

@@ -49,7 +49,18 @@ import io.swagger.annotations.ApiOperation;
 public class MetaDataController {
 	@Autowired
 	private IMetaDataService metaDataService;
+	//*******************************************************
+	//测试下载
+	@PostMapping(value="/downloadUrl")
+	public void countPlus(@RequestBody MetaData metaData){
+		System.out.println(metaData);
+		metaDataService.countPlus("http://127.0.0.1:8080/jeecg-boot/sys/common/download/files/20191115/测试用例_1573821807150.txt");
+	}
 
+
+
+
+	//*****************************************************
 	/**
 	  * 分页列表查询
 	 * @param metaData
@@ -191,12 +202,13 @@ public class MetaDataController {
 		return result;
 	}
 
-  /**
-      * 导出excel
-   *
-   * @param request
-   * @param response
-   */
+
+	 /**
+         * 导出excel
+      *
+      * @param request
+      * @param response
+      */
   @RequestMapping(value = "/exportXls")
   public ModelAndView exportXls(HttpServletRequest request, HttpServletResponse response) {
       // Step.1 组装查询条件
@@ -257,5 +269,7 @@ public class MetaDataController {
       }
       return Result.ok("文件导入失败！");
   }
+
+
 
 }

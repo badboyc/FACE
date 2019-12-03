@@ -14,4 +14,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface docMapper extends BaseMapper<doc> {
 
+    /**
+     * 统计doc下载量
+     */
+    public void countDocPlus(@Param("downloadPath") String downloadPath);
 }

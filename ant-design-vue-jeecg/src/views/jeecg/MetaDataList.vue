@@ -181,6 +181,12 @@
             align:"center",
             dataIndex: 'createBy'
           },
+            {
+                title: '下载量',
+                align:"center",
+                dataIndex: 'downloadCount',
+                sorter: true
+            },
           {
             title: '创建时间',
             align:"center",
@@ -314,15 +320,28 @@
         });
         this.$refs.showmeta.detail(record);
       },
-      handleDownload: function (value) {
-        var btn = document.createElement("a");
-        // btn.setAttribute('download', filename);// download属性
-        btn.setAttribute('href', value.uocPackageUrl);// href链接
-        btn.click();//自执行点击事件
+      // handleDownload: function (value) {
+      //   //window.open(value.downloadpath)
+      //   axios.get(value.uocPackageUrl, {
+      //     responseType: 'arraybuffer', // 或者responseType: 'blob'
+      //     xsrfHeaderName: 'Authorization',
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //       'Authorization': 'Bearer ' + Vue.ls.get(ACCESS_TOKEN),
+      //     }
+      //   }).then(res => {
+      //     const blob = new Blob([res.data], {
+      //      // type: 'application/vnd.ms-excel'
+      //     })
+      //     const objectUrl = URL.createObjectURL(blob)
+      //     window.location.href = objectUrl
+      //   }).catch(err => {
+      //     console.log(err)
+      //   })
+      // },
+     handleDownload: function (value) {
+       window.open(value.uocPackageUrl)
       },
-     // handleDownload: function (value) {
-       // window.open(value.uocPackageUrl)
-      //},
       handleAdd: function () {
         this.$refs.modalForm.add();
         this.$refs.modalForm.title = "发布";

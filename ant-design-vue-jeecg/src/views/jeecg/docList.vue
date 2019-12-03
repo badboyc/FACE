@@ -82,7 +82,7 @@
         :dataSource="dataSource"
         :pagination="ipagination"
         :loading="loading"
-        :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
+        :rowSelection="{selectedRowKeys: selectedRowKeys,onChange: onSelectChange}"
         @change="handleTableChange">
 
         <span slot="action" slot-scope="text, record">
@@ -124,8 +124,6 @@
   import { ACCESS_TOKEN } from "@/store/mutation-types"
   import Vue from 'vue'
   import { axios } from '@/utils/request'
-  import { downFile }from '@/api/manage'
-  import { VueAxios } from '@/utils/axios'
   export default {
     name: "docList",
     mixins:[JeecgListMixin],
@@ -163,6 +161,12 @@
             align:"center",
             dataIndex: 'type'
            },
+            {
+                title: '下载量',
+                align:"center",
+                dataIndex: 'downloadCount',
+                sorter: true
+            },
 		   {
             title: '版本',
             align:"center",
@@ -213,11 +217,10 @@
         return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
       }
     },
-    urlDownload:window._CONFIG['domianURL'] + "/sys/common/download/",
     methods: {
-      handleDetail: function (record) {
-        getAction(this.url.detail, {createBy: record.createBy}).then((res) => {
-          if (res.success) {
+      handleDetail:function(record){
+        getAction(this.url.detail,{createBy:record.createBy}).then((res)=>{
+          if(res.success){
             this.loadData();
           }
         });
@@ -229,12 +232,29 @@
         this.loadData();
       },
 
+      // handleDownload: function (value) {
+      //   //window.open(value.downloadpath)
+      //   axios.get(value.downloadpath, {
+      //     responseType: 'arraybuffer', // 或者responseType: 'blob'
+      //     xsrfHeaderName: 'Authorization',
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //       'Authorization': 'Bearer ' + Vue.ls.get(ACCESS_TOKEN),
+      //     }
+      //   }).then(res => {
+      //     const blob = new Blob([res.data], {
+      //       type: 'application/vnd.ms-excel'
+      //     })
+      //     const objectUrl = URL.createObjectURL(blob)
+      //     window.location.href = objectUrl
+      //   }).catch(err => {
+      //     console.log(err)
+      //   })
+      // },
       handleDownload: function (value) {
-            var btn = document.createElement("a");
-           // btn.setAttribute('download', filename);// download属性
-            btn.setAttribute('href', value.downloadpath);// href链接
-            btn.click();//自执行点击事件
-          },
+          console.log(value);
+          window.open(value.downloadpath);
+      },
     }
   }
 </script>

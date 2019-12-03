@@ -276,7 +276,8 @@ export const JeecgListMixin = {
       if(text.indexOf(",")>0){
         text = text.substring(0,text.indexOf(","))
       }
-      window.open(window._CONFIG['domianURL'] + "/sys/common/download/"+text);
+      //window.open(window._CONFIG['domianURL'] + "/sys/common/download/"+text);
+      window.open(window._CONFIG['domianURL'] + "/sys/download/download/"+text);
     },
   }
 
