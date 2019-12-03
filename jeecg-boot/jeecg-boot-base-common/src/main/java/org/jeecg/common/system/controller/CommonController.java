@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.sql.Blob;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -163,8 +164,9 @@ public class CommonController {
 			String downloadFilePath = localPath + File.separator + filePath;
 			File file = new File(downloadFilePath);
 	         if (file.exists()) {
-	        	 response.setContentType("application/force-download");// 设置强制下载不打开            
+	        	 response.setContentType("application/force-download");// 设置强制下载不打开 force-download           
 	 			response.addHeader("Content-Disposition", "attachment;fileName=" + new String(file.getName().getBytes("UTF-8"),"iso-8859-1"));
+				 response.setHeader("Access-Control-Expose-Headers","Content-Disposition");
 	 			inputStream = new BufferedInputStream(new FileInputStream(file));
 	 			outputStream = response.getOutputStream();
 	 			byte[] buf = new byte[1024];

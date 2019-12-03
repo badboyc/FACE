@@ -18,7 +18,7 @@
         @click.native="toggle"/>
 
       <span v-if="device === 'desktop'">欢迎进入 UoP可移植管理单元系统</span>
-      <span v-else>西北工业大学</span>
+      <span v-else>中航工业</span>
 
       <user-menu :theme="theme"/>
     </div>
