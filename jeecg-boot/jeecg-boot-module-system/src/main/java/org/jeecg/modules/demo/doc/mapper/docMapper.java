@@ -17,5 +17,5 @@ public interface docMapper extends BaseMapper<doc> {
     /**
      * 统计doc下载量
      */
-    public void countDocPlus(String downloadPath);
+    public void countDocPlus(@Param("downloadPath") String downloadPath);
 }

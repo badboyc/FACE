@@ -68,11 +68,9 @@ public class DownloadController {
                 response.flushBuffer();
                 //下载次数加一
                 //*********************这是一条分割线**************************
-                //本机下载地址暂用，之后转为相对路径
-                String urlPath="http://127.0.0.1:8080/jeecg-boot/sys/download/download/"+filePath;
-                imetaDataService.countPlus(urlPath);
-                idocService.countDocPlus(urlPath);
-                //imetaDataService.countPlus(urlPath);
+                System.out.println(filePath);
+                imetaDataService.countPlus(filePath);
+                idocService.countDocPlus(filePath);
                 //*********************这是一条分割线**************************
             }
 

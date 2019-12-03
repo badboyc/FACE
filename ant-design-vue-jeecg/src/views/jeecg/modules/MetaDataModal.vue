@@ -187,6 +187,10 @@
     }
     return path.substring(path.lastIndexOf("/")+1);
   }
+  var urlPath = window.document.location.href;
+  var docPath = window.document.location.pathname;
+  var index = urlPath.indexOf(docPath);
+  var serverPath = urlPath.substring(0, index);
   export default {
     name: "MetaDataModal",
     data () {
@@ -213,9 +217,9 @@
           add: "/meta/metaData/add",
           edit: "/meta/metaData/edit",
         },
-        uploadAction:window._CONFIG['domianURL']+"/sys/common/upload",
+        uploadAction:serverPath+"/jeecg-boot"+"/sys/common/upload",
         //urlDownload:window._CONFIG['domianURL'] + "/sys/common/download/",
-        urlDownload:window._CONFIG['domianURL'] + "/sys/download/download/",
+        urlDownload:serverPath+"/jeecg-boot"+"/sys/download/download/",
         headers:{},
         fileList: [],
         uocPackageUrl:''

@@ -16,7 +16,7 @@ public interface MetaDataMapper extends BaseMapper<MetaData> {
     /**
      * @功能：统计下载次数
      */
-    public void countPlus(String uocPackageUrl);
+    public void countPlus(@Param("uocPackageUrl") String uocPackageUrl);
 
 
 }
