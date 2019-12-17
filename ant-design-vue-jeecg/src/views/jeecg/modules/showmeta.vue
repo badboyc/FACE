@@ -4,9 +4,11 @@
       :width="modelStyle.width"
       :visible="visible"
       :bodyStyle ="bodyStyle"
+      :confirmLoading="confirmLoading"
       @cancel="handleCancel"
+      cancelText="关闭"
       destroyOnClose
-      :footer="null"
+      @ok="handleOk"
     >
       <template slot="title">
         <a-button icon="fullscreen" class="custom-btn" @click="handleClickToggleFullScreen"/>
@@ -38,12 +40,51 @@
         审核时间：<span v-html="record.updateTime" class="article-content"></span><br>
         UoC包：<a href="javascript:;" @click="handleDownload(record)">{{getfilename(record)}}</a>
       </a-card>
+      <!--<a-spin :spinning="confirmLoading">-->
+      <a-form :form="form" @submit="handleSubmit(record)">
+        <a-form-item v-has="'admin:set'" label="请输入审核结论" :wrapper-col="{ span: 2, offset: 1 }"/>
+        <a-form-item
+          v-has="'admin:set'"
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="审核状态">
+          <!--<a-input placeholder="请输入审核状态" v-decorator="['reviewStatus', {}]" />-->
+          <a-select  placeholder="请设置审核状态"   v-decorator="['reviewStatus', {}]" default-value="0">
+            <a-select-option v-for="(item, key) in metastatus" :key="key" :value="item.value">
+              <span style="display: inline-block;width: 100%" :title=" item.text || item.label ">
+                {{ item.text || item.label }}
+              </span>
+            </a-select-option>
+            <!--            <a-select-option value="0">未处理</a-select-option>-->
+            <!--            <a-select-option value="1">正在处理</a-select-option>-->
+            <!--            <a-select-option value="2">处理完成</a-select-option>-->
+          </a-select>
+        </a-form-item>
+        <a-form-item
+          v-has="'admin:set'"
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="审核结论">
+          <a-textarea  placeholder="请输入审核结论" rows="2" v-decorator="['reviewResult', {}]" />
+        </a-form-item>
+        <a-form-item v-has="'admin:set'" :wrapper-col="{ span: 16, offset: 10 }">
+          <a-button type="primary" html-type="submit">
+            提交
+          </a-button>
+        </a-form-item>
+      </a-form>
+     <!-- </a-spin>-->
     </a-modal>
 </template>
 
 <script>
   import Vue from 'vue'
+  import { httpAction } from '@/api/manage'
+  import pick from 'lodash.pick'
   import { axios } from '@/utils/request'
+  import { ACCESS_TOKEN } from "@/store/mutation-types"
+  import { disabledAuthFilter } from "@/utils/authFilter"
+  import {initDictOptions, filterDictText} from '@/components/dict/JDictSelectUtil'
     export default {
         name: "showmeta",
         data() {
@@ -51,6 +92,7 @@
                 record: {},
                 visible: false,
                 loading: false,
+                model: {},
                 labelCol: {
                     xs: { span: 24 },
                     sm: { span: 5 },
@@ -65,6 +107,12 @@
                     "overflow-y":"auto",
 
                 },
+              confirmLoading: false,
+              form: this.$form.createForm(this),
+              url: {
+                add: "/meta/metaData/add",
+                edit: "/meta/metaData/edit",
+              },
                 modelStyle:{
                     width: '60%',
                     style: { top: '20px' },
@@ -72,7 +120,28 @@
                 }
             }
         },
+      created () {
+        this.initDictConfig();
+        const token = Vue.ls.get(ACCESS_TOKEN);
+        this.headers = {"X-Access-Token":token};
+      },
         methods: {
+          initDictConfig() {
+            //初始化字典 - 处理状态
+            initDictOptions('version_status').then((res) => {
+              if (res.success) {
+                this.versionstatus = res.result;
+              }
+            });
+            initDictOptions('meta_status').then((res) => {
+              if (res.success) {
+                this.metastatus = res.result;
+              }
+            });
+          },
+          isDisabledAuth(code){
+            return disabledAuthFilter(code);
+          },
             handleClickToggleFullScreen() {
                 let mode = !this.modelStyle.fullScreen
                 if (mode) {
@@ -97,21 +166,17 @@
             btn.setAttribute('href', value.uocPackageUrl);// href链接
             btn.click();//自执行点击事件
           },
-          //handleDownload: function (value) {
-            //window.open(value.uocPackageUrl)
-          //},
+
             detail (record) {
                 this.visible = true;
                 this.record = record;
             },
           verstatus(record){
             if(record.versionStatus=='0'){
-              return "最新版";
+              return "正常";
             }else if(record.versionStatus=='1'){
-              return "旧版";
-            }else if(record.versionStatus=='2'){
               return "申请移除";
-            }else if(record.versionStatus=='3'){
+            }else if(record.versionStatus=='2'){
               return "已移除";
             } else{
               return record.versionStatus;
@@ -122,17 +187,61 @@
                if(record.reviewStatus=='0'){
                    return "待审核";
                 }else if(record.reviewStatus=='1'){
-                    return "审核中";
-                }else if(record.reviewStatus=='2'){
                     return "审核已通过";
-                }else if(record.reviewStatus=='3'){
-                 return "审核未通过";
-               } else{
+                }else if(record.reviewStatus=='2'){
+                    return "审核未通过";
+                } else{
                     return record.reviewStatus;
                 }
             },
+          handleSubmit(record){
+           // this.form.resetFields();
+            this.model = Object.assign({}, record);
+            this.$nextTick(() => {
+              this.form.setFieldsValue(pick(this.model,'versionStatus','reviewStatus','reviewResult'))
+              //时间格式化
+            });
+            const that = this;
+            // 触发表单验证
+            this.form.validateFields((err, values) => {
+              if (!err) {
+                that.confirmLoading = true;
+                let httpurl = '';
+                let method = '';
+                if(!this.model.id){
+                  httpurl+=this.url.add;
+                  method = 'post';
+                }else{
+                  httpurl+=this.url.edit;
+                  method = 'put';
+                }
+                let formData = Object.assign(this.model, values);
+                formData.uocPackageUrl=this.uocPackageUrl;
+                //时间格式化
+                console.log(values);
+                console.log(formData);
+                httpAction(httpurl,formData,method).then((res)=>{
+                  if(res.success){
+                    that.$message.success(res.message);
+                    that.$emit('ok');
+                  }else{
+                    that.$message.warning(res.message);
+                  }
+                }).finally(() => {
+                  that.confirmLoading = false;
+                  that.close();
+                })
 
-            handleCancel(e) {
+
+
+              }
+            })
+          },
+          handleOk (e){
+            this.visible = false
+          },
+
+          handleCancel(e) {
                 this.visible = false
             },
         }

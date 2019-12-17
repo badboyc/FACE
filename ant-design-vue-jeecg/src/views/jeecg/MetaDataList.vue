@@ -1,80 +1,14 @@
 <template>
   <a-card :bordered="false">
 
-    <!-- 查询区域 -->
-    <div class="table-page-search-wrapper">
-      <a-form layout="inline">
-        <a-row :gutter="24">
-
-          <!--<a-col :md="6" :sm="8">
-            <a-form-item label="产品名称">
-              <a-input placeholder="请输入产品名称" v-model="queryParam.productName"></a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :md="6" :sm="8">
-            <a-form-item label="供应商名称">
-              <a-input placeholder="请输入供应商名称" v-model="queryParam.supplierName"></a-input>
-            </a-form-item>
-          </a-col>-->
-          <template v-if="toggleSearchStatus">
-            <a-col :md="6" :sm="8">
-              <a-form-item label="审核状态">
-                <a-select v-model="queryParam.reviewStatus" placeholder="请设置审核状态"   v-decorator="['reviewStatus', {}]" default-value="0">
-                  <a-select-option v-for="(item, key) in metastatus" :key="key" :value="item.value">
-              <span style="display: inline-block;width: 100%" :title=" item.text || item.label ">
-                {{ item.text || item.label }}
-              </span>
-                  </a-select-option>
-                  <!--            <a-select-option value="0">未处理</a-select-option>-->
-                  <!--            <a-select-option value="1">正在处理</a-select-option>-->
-                  <!--            <a-select-option value="2">处理完成</a-select-option>-->
-                </a-select>
-                <!--<a-input placeholder="请选择审核状态" v-model="queryParam.reviewStatus"></a-input>-->
-              </a-form-item>
-            </a-col>
-            <a-col :md="6" :sm="8">
-              <a-form-item label="版本状态">
-                <a-select  placeholder="请设置版本状态" @click="searchQuery"  v-model="queryParam.versionStatus" v-decorator="['versionStatus', {}]" default-value="0">
-                  <a-select-option v-for="(item, key) in versionstatus" :key="key" :value="item.value">
-              <span style="display: inline-block;width: 100%" :title=" item.text || item.label ">
-                {{ item.text || item.label }}
-              </span>
-                  </a-select-option>
-                  <!--            <a-select-option value="0">未处理</a-select-option>-->
-                  <!--            <a-select-option value="1">正在处理</a-select-option>-->
-                  <!--            <a-select-option value="2">处理完成</a-select-option>-->
-                </a-select>
-                <!--<a-input placeholder="请选择版本状态" v-model="queryParam.versionStatus"></a-input>-->
-              </a-form-item>
-            </a-col>
-            <a-col :md="6" :sm="8">
-              <a-form-item label="创建人id">
-                <a-input placeholder="请输入创建人id" v-model="queryParam.createBy"></a-input>
-              </a-form-item>
-            </a-col>
-          </template>
-          <a-col :md="6" :sm="8" >
-            <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
-              <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
-              <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
-              <a @click="handleToggleSearch" style="margin-left: 8px">
-                {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
-              </a>
-            </span>
-          </a-col>
-
-        </a-row>
-      </a-form>
-    </div>
-
     <!-- 操作按钮区域 -->
     <div class="table-operator">
-      <a-button @click="handleAdd" type="primary" icon="plus" v-has="'has2:provider'">发布新产品</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls('元数据')">导出</a-button>
-      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
-        <a-button type="primary" icon="import">导入</a-button>
-      </a-upload>
+      <a-button @click="handleAdd" type="primary" icon="plus" >发布新产品</a-button>
+      <a-button @click="AllPublished" type="primary">已发布</a-button>
+      <a-button @click="PendingReview" type="primary">待审核</a-button>
+      <a-button @click="ReviewOk" type="primary">审核已通过</a-button>
+      <a-button @click="ReviewNotOk" type="primary">审核未通过</a-button>
+      <a-button @click="Removed" type="primary">已移除</a-button>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
@@ -109,22 +43,11 @@
           <a-dropdown>
             <a class="ant-dropdown-link">操作 <a-icon type="down" /></a>
             <a-menu slot="overlay">
-              <a-menu-item v-has="'has1:status'">
-                  <a @click="handleEdit(record)" >审核</a>
-              </a-menu-item>
-              <a-menu-item v-has="'has2:provider'">
+              <a-menu-item>
                   <a href="javascript:;" @click="handleRemoveapply(record)" >申请移除</a>
-              </a-menu-item>
-              <a-menu-item v-has="'has1:status'">
-                  <a href="javascript:;" @click="handleRemove(record)">移除</a>
               </a-menu-item>
               <a-menu-item>
                   <a href="javascript:;" @click="handleDownload(record)">下载</a>
-              </a-menu-item>
-              <a-menu-item v-has="'has1:status'">
-                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                  <a>删除</a>
-                </a-popconfirm>
               </a-menu-item>
             </a-menu>
           </a-dropdown>
@@ -142,6 +65,7 @@
 
 <script>
   import Vue from 'vue'
+  import { USER_INFO} from "@/store/mutation-types"
   import MetaDataModal from './modules/MetaDataModal'
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
   import {initDictOptions, filterDictText} from '@/components/dict/JDictSelectUtil'
@@ -320,27 +244,81 @@
         });
         this.$refs.showmeta.detail(record);
       },
-      // handleDownload: function (value) {
-      //   //window.open(value.downloadpath)
-      //   axios.get(value.uocPackageUrl, {
-      //     responseType: 'arraybuffer', // 或者responseType: 'blob'
-      //     xsrfHeaderName: 'Authorization',
-      //     headers: {
-      //       'Content-Type': 'application/json',
-      //       'Authorization': 'Bearer ' + Vue.ls.get(ACCESS_TOKEN),
-      //     }
-      //   }).then(res => {
-      //     const blob = new Blob([res.data], {
-      //      // type: 'application/vnd.ms-excel'
-      //     })
-      //     const objectUrl = URL.createObjectURL(blob)
-      //     window.location.href = objectUrl
-      //   }).catch(err => {
-      //     console.log(err)
-      //   })
-      // },
-     handleDownload: function (value) {
-       window.open(value.uocPackageUrl)
+      handleDownload: function (value) {
+        var btn = document.createElement("a");
+        // btn.setAttribute('download', filename);// download属性
+        btn.setAttribute('href', value.uocPackageUrl);// href链接
+        btn.click();//自执行点击事件
+      },
+      AllPublished: function() {
+        var params ={createBy:Vue.ls.get(USER_INFO).username,versionStatus:'0,1'};//查询条件
+        this.loading = true;
+        getAction(this.url.list, params).then((res) => {
+          if (res.success) {
+            this.dataSource = res.result.records;
+            this.ipagination.total = res.result.total;
+          }
+          if(res.code===510){
+            this.$message.warning(res.message)
+          }
+          this.loading = false;
+        })
+      },
+      PendingReview: function() {
+        var params ={createBy:Vue.ls.get(USER_INFO).username,reviewStatus:'0',versionStatus:'0,1'};//查询条件
+        this.loading = true;
+        getAction(this.url.list, params).then((res) => {
+          if (res.success) {
+            this.dataSource = res.result.records;
+            this.ipagination.total = res.result.total;
+          }
+          if(res.code===510){
+            this.$message.warning(res.message)
+          }
+          this.loading = false;
+        })
+      },
+      ReviewOk: function() {
+        var params ={createBy:Vue.ls.get(USER_INFO).username,reviewStatus:'1',versionStatus:'0,1'};//查询条件
+        this.loading = true;
+        getAction(this.url.list, params).then((res) => {
+          if (res.success) {
+            this.dataSource = res.result.records;
+            this.ipagination.total = res.result.total;
+          }
+          if(res.code===510){
+            this.$message.warning(res.message)
+          }
+          this.loading = false;
+        })
+      },
+      ReviewNotOk: function() {
+        var params ={createBy:Vue.ls.get(USER_INFO).username,reviewStatus:'2',versionStatus:'0,1'};//查询条件
+        this.loading = true;
+        getAction(this.url.list, params).then((res) => {
+          if (res.success) {
+            this.dataSource = res.result.records;
+            this.ipagination.total = res.result.total;
+          }
+          if(res.code===510){
+            this.$message.warning(res.message)
+          }
+          this.loading = false;
+        })
+      },
+      Removed: function() {
+        var params ={createBy:Vue.ls.get(USER_INFO).username,versionStatus:'2'};//查询条件
+        this.loading = true;
+        getAction(this.url.list, params).then((res) => {
+          if (res.success) {
+            this.dataSource = res.result.records;
+            this.ipagination.total = res.result.total;
+          }
+          if(res.code===510){
+            this.$message.warning(res.message)
+          }
+          this.loading = false;
+        })
       },
       handleAdd: function () {
         this.$refs.modalForm.add();
@@ -353,17 +331,17 @@
         this.$refs.modalForm.disableSubmit = false;
       },
       handleRemoveapply:function (record){
-        if(record.versionStatus=='2'){
+        if(record.versionStatus=='1'){
           return this.$message.success('已申请移除成功，请勿重复申请！');
         }
         this.$refs.modalForm.editstatus (record);
         this.$refs.modalForm.disableSubmit = false;
-        this.$refs.modalForm.handleOkstatus (2);
+        this.$refs.modalForm.handleOkstatus (1);
       },
       handleRemove:function (record){
         this.$refs.modalForm.editstatus (record);
         this.$refs.modalForm.disableSubmit = false;
-        this.$refs.modalForm.handleOkstatus (3);
+        this.$refs.modalForm.handleOkstatus (2);
       }
 
     }

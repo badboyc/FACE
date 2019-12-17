@@ -1,103 +1,8 @@
 <template>
   <a-card :bordered="false">
-
-    <!-- 查询区域 -->
-    <div class="table-page-search-wrapper">
-      <a-form layout="inline">
-        <a-row :gutter="24">
-
-          <a-col :md="6" :sm="8">
-            <a-form-item label="创建人id">
-              <a-input placeholder="请输入创建人id" v-model="queryParam.createBy"></a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :md="6" :sm="8">
-            <a-form-item label="申诉产品id">
-              <a-input placeholder="请输入申诉产品id" v-model="queryParam.productId"></a-input>
-            </a-form-item>
-          </a-col>
-        <template v-if="toggleSearchStatus">
-        <a-col :md="6" :sm="8">
-            <a-form-item label="申诉类型">
-              <a-input placeholder="请输入申诉类型" v-model="queryParam.adviceType"></a-input>
-            </a-form-item>
-          </a-col>
-<!--          <a-col :md="6" :sm="8">-->
-<!--            <a-form-item label="创建日期">-->
-<!--              <a-date-picker-->
-<!--                v-model="queryParam.createTime"-->
-<!--                showTime-->
-<!--                format="YYYY-MM-DD HH:mm:ss"-->
-<!--                placeholder="请输入创建日期"-->
-<!--                style="width: 100%" />-->
-<!--            </a-form-item>-->
-<!--          </a-col>-->
-<!--          <a-col :md="6" :sm="8">-->
-<!--            <a-form-item label="申诉内容">-->
-<!--              <a-input placeholder="请输入申诉内容" v-model="queryParam.content"></a-input>-->
-<!--            </a-form-item>-->
-<!--          </a-col>-->
-
-          <a-col :md="6" :sm="8">
-            <a-form-item label="处理状态">
-              <a-select v-model="queryParam.processStatus" placeholder="请选择处理状态" default-value="0">
-                <a-select-option v-for="(item, key) in dealstatus" :key="key" :value="item.value">
-                  <span style="display: inline-block;width: 100%" :title=" item.text || item.label ">
-                    {{ item.text || item.label }}
-                  </span>
-                </a-select-option>
-<!--                <a-select-option value="0">未处理</a-select-option>-->
-<!--                <a-select-option value="1">正在处理</a-select-option>-->
-<!--                <a-select-option value="2">处理完成</a-select-option>-->
-              </a-select>
-            </a-form-item>
-          </a-col>
-
-          <!--            <a-form-item label="处理状态">-->
-          <!--              <a-input placeholder="请输入处理状态" v-model="queryParam.processStatus"></a-input>-->
-          <!--            </a-form-item>-->
-          <a-col :md="6" :sm="8">
-            <a-form-item label="处理人id">
-              <a-input placeholder="请输入处理人id" v-model="queryParam.updateBy"></a-input>
-            </a-form-item>
-          </a-col>
-
-<!--          <a-col :md="6" :sm="8">-->
-<!--            <a-form-item label="处理日期">-->
-<!--              <a-date-picker-->
-<!--                showTime-->
-<!--                format="YYYY-MM-DD HH:mm:ss"-->
-<!--                placeholder="请输入处理日期"-->
-<!--                v-model="queryParam.updateTime" style="width: 100%" />-->
-<!--            </a-form-item>-->
-<!--          </a-col>-->
-
-<!--          <a-col :md="6" :sm="8">-->
-<!--            <a-form-item label="处理结果">-->
-<!--              <a-input placeholder="请输入处理结果" v-model="queryParam.result"></a-input>-->
-<!--            </a-form-item>-->
-<!--          </a-col>-->
-
-
-          </template>
-          <a-col :md="6" :sm="8" >
-            <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
-              <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
-              <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
-              <a @click="handleToggleSearch" style="margin-left: 8px">
-                {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
-              </a>
-            </span>
-          </a-col>
-
-        </a-row>
-      </a-form>
-    </div>
-
     <!-- 操作按钮区域 -->
     <div class="table-operator">
-      <a-button @click="handleAdd" v-has="'add'" type="primary" icon="plus">新增</a-button>
+      <a-button @click="handleAdd" v-has="'add'" type="primary" icon="plus">我要申诉</a-button>
       <a-button @click="handleProcessed" type="primary">已处理</a-button>
       <a-button @click="handleUntreated" type="primary">未处理</a-button>
 <!--      <a-button type="primary" icon="download" @click="handleExportXls('测试2')">导出</a-button>-->
@@ -240,21 +145,21 @@
                // }
            }
            },
-		   {
-            title: '处理人id',
-            align:"center",
-            dataIndex: 'updateBy'
-           },
-		   {
-            title: '处理日期',
-            align:"center",
-            dataIndex: 'updateTime'
-           },
-		   {
-            title: '处理结果',
-            align:"center",
-            dataIndex: 'result'
-           },
+		   //{
+         //   title: '处理人id',
+           // align:"center",
+            //dataIndex: 'updateBy'
+           //},
+		   //{
+         //   title: '处理日期',
+           // align:"center",
+            //dataIndex: 'updateTime'
+           //},
+		   //{
+         //   title: '处理结果',
+           // align:"center",
+            //dataIndex: 'result'
+           //},
           {
             title: '操作',
             dataIndex: 'action',

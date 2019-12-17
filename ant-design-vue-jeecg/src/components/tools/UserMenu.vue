@@ -64,7 +64,7 @@
 <script>
   import HeaderNotice from './HeaderNotice'
   import UserPassword from './UserPassword'
-  import SettingDrawer from "@/components/setting/SettingDrawer";
+  import SettingDrawer from "@/components/setting/SettingDrawer"
   import DepartSelect from './DepartSelect'
   import { mapActions, mapGetters } from 'vuex'
   import { mixinDevice } from '@/utils/mixin.js'

@@ -66,7 +66,7 @@
             success(img)
           }
         },
-        myValue: this.value
+        myValue:"" //this.value
       }
     },
     mounted() {

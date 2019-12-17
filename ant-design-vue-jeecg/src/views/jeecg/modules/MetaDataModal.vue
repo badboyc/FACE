@@ -15,84 +15,84 @@
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="产品名称">
-          <a-input :disabled="isDisabledAuth('provider')" placeholder="请输入产品名称" v-decorator="['productName', {}]" />
+          <a-input placeholder="请输入产品名称" v-decorator="['productName', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="供应商名称">
-          <a-input :disabled="isDisabledAuth('provider')" placeholder="请输入供应商名称" v-decorator="['supplierName', {}]" />
+          <a-input placeholder="请输入供应商名称" v-decorator="['supplierName', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="供应商地址">
-          <a-input :disabled="isDisabledAuth('provider')" placeholder="请输入供应商地址" v-decorator="['supplierAddress', {}]" />
+          <a-input placeholder="请输入供应商地址" v-decorator="['supplierAddress', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="联系方式">
-          <a-input :disabled="isDisabledAuth('provider')" placeholder="请输入联系方式" v-decorator="['contact', {}]" />
+          <a-input placeholder="请输入联系方式" v-decorator="['contact', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="产品版本号">
-          <a-input :disabled="isDisabledAuth('provider')" placeholder="请输入产品版本号" v-decorator="['version', {}]" />
+          <a-input placeholder="请输入产品版本号" v-decorator="['version', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="上一版本号">
-          <a-input :disabled="isDisabledAuth('provider')" placeholder="请输入上一版本号" v-decorator="['previousVersion', {}]" />
+          <a-input placeholder="请输入上一版本号" v-decorator="['previousVersion', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="关键词">
-          <a-input :disabled="isDisabledAuth('provider')" placeholder="请输入关键词" v-decorator="['keyWord', {}]" />
+          <a-input placeholder="请输入关键词" v-decorator="['keyWord', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="产品研发及应用背景">
-          <a-textarea :disabled="isDisabledAuth('provider')" placeholder="请输入产品研发及应用背景" rows="10" v-decorator="['background', {}]" />
+          <a-textarea placeholder="请输入产品研发及应用背景" rows="10" v-decorator="['background', {}]" />
           <!--<a-input placeholder="请输入产品研发及应用背景" v-decorator="['background', {}]" />-->
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="产品主要功能描述">
-          <a-textarea :disabled="isDisabledAuth('provider')" placeholder="请输入产品主要功能描述" rows="10" v-decorator="['functionDescription', {}]" />
+          <a-textarea placeholder="请输入产品主要功能描述" rows="10" v-decorator="['functionDescription', {}]" />
           <!--<a-input placeholder="请输入产品主要功能描述" v-decorator="['functionDescription', {}]" />-->
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="硬件环境基础要求">
-          <a-textarea :disabled="isDisabledAuth('provider')" placeholder="请输入硬件环境基础要求" rows="5" v-decorator="['hardwareRequirements', {}]" />
+          <a-textarea placeholder="请输入硬件环境基础要求" rows="5" v-decorator="['hardwareRequirements', {}]" />
           <!--<a-input placeholder="请输入硬件环境基础要求" v-decorator="['hardwareRequirements', {}]" />-->
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="环境依赖包/工具">
-          <a-textarea :disabled="isDisabledAuth('provider')" placeholder="请输入环境依赖包/工具" rows="5" v-decorator="['envDependency', {}]" />
+          <a-textarea placeholder="请输入环境依赖包/工具" rows="5" v-decorator="['envDependency', {}]" />
           <!--<a-input placeholder="请输入环境依赖包/工具" v-decorator="['envDependency', {}]" />-->
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="一致性认证结果">
-          <a-textarea :disabled="isDisabledAuth('provider')" placeholder="请输入一致性认证结果" rows="2" v-decorator="['certificateResult', {}]" />
+          <a-textarea placeholder="请输入一致性认证结果" rows="2" v-decorator="['certificateResult', {}]" />
           <!--<a-input placeholder="请输入一致性认证结果" v-decorator="['certificateResult', {}]" />-->
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="相关库链接">
-          <a-textarea :disabled="isDisabledAuth('provider')" placeholder="请输入相关库链接" rows="2" v-decorator="['libraryLink', {}]" />
+          <a-textarea placeholder="请输入相关库链接" rows="2" v-decorator="['libraryLink', {}]" />
         </a-form-item>
         <a-form-item
           v-if="false"
@@ -105,14 +105,15 @@
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="许可类别">
-          <a-input :disabled="isDisabledAuth('provider')" placeholder="请输入许可类别" v-decorator="['licenseCategory', {}]" />
+          <a-input placeholder="请输入许可类别" v-decorator="['licenseCategory', {}]" />
         </a-form-item>
         <a-form-item
+          v-has="'admin:set'"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="版本状态">
           <!--<a-input placeholder="请输入版本状态" v-decorator="['versionStatus', {}]" />-->
-          <a-select :disabled="isDisabledAuth('admin')"  placeholder="请设置版本状态"   v-decorator="['versionStatus', {}]" default-value="0">
+          <a-select   placeholder="请设置版本状态"   v-decorator="['versionStatus', {}]" default-value="0">
             <a-select-option v-for="(item, key) in versionstatus" :key="key" :value="item.value">
               <span style="display: inline-block;width: 100%" :title=" item.text || item.label ">
                 {{ item.text || item.label }}
@@ -124,11 +125,12 @@
           </a-select>
         </a-form-item>
         <a-form-item
+          v-has="'admin:set'"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="审核状态">
           <!--<a-input placeholder="请输入审核状态" v-decorator="['reviewStatus', {}]" />-->
-          <a-select :disabled="isDisabledAuth('admin')" placeholder="请设置审核状态"   v-decorator="['reviewStatus', {}]" default-value="0">
+          <a-select  placeholder="请设置审核状态"   v-decorator="['reviewStatus', {}]" default-value="0">
             <a-select-option v-for="(item, key) in metastatus" :key="key" :value="item.value">
               <span style="display: inline-block;width: 100%" :title=" item.text || item.label ">
                 {{ item.text || item.label }}
@@ -140,12 +142,13 @@
           </a-select>
         </a-form-item>
         <a-form-item
+          v-has="'admin:set'"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="审核结论">
-          <a-textarea :disabled="isDisabledAuth('admin')" placeholder="请输入审核结论" rows="2" v-decorator="['reviewResult', {}]" />
+          <a-textarea  placeholder="请输入审核结论" rows="2" v-decorator="['reviewResult', {}]" />
         </a-form-item>
-        <a-form-item :disabled="isDisabledAuth('provider')" label="上传UoC包" :labelCol="labelCol" :wrapperCol="wrapperCol" >
+        <a-form-item :disabled="isDisabledAuth('provider_write_only')" label="上传UoC包" :labelCol="labelCol" :wrapperCol="wrapperCol" >
           <a-upload
             name="file"
             :multiple="true"
@@ -168,9 +171,9 @@
 
 <script>
   import Vue from 'vue'
+  import { USER_INFO} from "@/store/mutation-types"
   import { httpAction } from '@/api/manage'
   import pick from 'lodash.pick'
-  import moment from "moment"
   import { ACCESS_TOKEN } from "@/store/mutation-types"
   import { disabledAuthFilter } from "@/utils/authFilter"
   import {initDictOptions, filterDictText} from '@/components/dict/JDictSelectUtil'
@@ -208,6 +211,7 @@
           xs: { span: 24 },
           sm: { span: 16 },
         },
+        Userinfo:"pro__Login_Userinfo",
 
         confirmLoading: false,
         form: this.$form.createForm(this),
@@ -342,9 +346,6 @@
               that.confirmLoading = false;
               that.close();
             })
-
-
-
           }
         })
       },

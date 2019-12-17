@@ -70,7 +70,10 @@
 
     <!-- 操作按钮区域 -->
     <div class="table-operator">
-      <a-button @click="handleAdd" type="primary" icon="plus" v-has="'has2:provider'">发布新产品</a-button>
+     <!-- <a-button @click="handleAdd" type="primary" icon="plus" >发布新产品</a-button>-->
+      <a-button @click="WaitingReview" type="primary">待审核</a-button>
+      <a-button @click="NotPassed" type="primary">审核未通过</a-button>
+      <a-button @click="WaitingRemove" type="primary">待移除</a-button>
       <a-button type="primary" icon="download" @click="handleExportXls('元数据')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
@@ -103,25 +106,19 @@
         @change="handleTableChange">
 
         <span slot="action" slot-scope="text, record">
-          <a href="javascript:;" @click="handleDetail(record)">详情</a>
+          <a href="javascript:;" @click="handleDetail(record)">审核</a>
 
           <a-divider type="vertical" />
           <a-dropdown>
             <a class="ant-dropdown-link">操作 <a-icon type="down" /></a>
             <a-menu slot="overlay">
-              <a-menu-item v-has="'has1:status'">
-                  <a @click="handleEdit(record)" >审核</a>
-              </a-menu-item>
-              <a-menu-item v-has="'has2:provider'">
-                  <a href="javascript:;" @click="handleRemoveapply(record)" >申请移除</a>
-              </a-menu-item>
-              <a-menu-item v-has="'has1:status'">
+              <a-menu-item >
                   <a href="javascript:;" @click="handleRemove(record)">移除</a>
               </a-menu-item>
               <a-menu-item>
                   <a href="javascript:;" @click="handleDownload(record)">下载</a>
               </a-menu-item>
-              <a-menu-item v-has="'has1:status'">
+              <a-menu-item >
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
                   <a>删除</a>
                 </a-popconfirm>
@@ -342,13 +339,55 @@
       handleRemoveapply:function (record){
         this.$refs.modalForm.editstatus (record);
         this.$refs.modalForm.disableSubmit = false;
-        this.$refs.modalForm.handleOkstatus (2);
+        this.$refs.modalForm.handleOkstatus (1);
       },
       handleRemove:function (record){
         this.$refs.modalForm.editstatus (record);
         this.$refs.modalForm.disableSubmit = false;
-        this.$refs.modalForm.handleOkstatus (3);
-      }
+        this.$refs.modalForm.handleOkstatus (2);
+      },
+      WaitingReview: function() {
+        var params ={reviewStatus:'0',versionStatus:'0,1'};//查询条件
+        this.loading = true;
+        getAction(this.url.list, params).then((res) => {
+          if (res.success) {
+            this.dataSource = res.result.records;
+            this.ipagination.total = res.result.total;
+          }
+          if(res.code===510){
+            this.$message.warning(res.message)
+          }
+          this.loading = false;
+        })
+      },
+      NotPassed: function() {
+        var params ={reviewStatus:'2',versionStatus:'0,1'};//查询条件
+        this.loading = true;
+        getAction(this.url.list, params).then((res) => {
+          if (res.success) {
+            this.dataSource = res.result.records;
+            this.ipagination.total = res.result.total;
+          }
+          if(res.code===510){
+            this.$message.warning(res.message)
+          }
+          this.loading = false;
+        })
+      },
+      WaitingRemove: function() {
+        var params ={versionStatus:'1'};//查询条件
+        this.loading = true;
+        getAction(this.url.list, params).then((res) => {
+          if (res.success) {
+            this.dataSource = res.result.records;
+            this.ipagination.total = res.result.total;
+          }
+          if(res.code===510){
+            this.$message.warning(res.message)
+          }
+          this.loading = false;
+        })
+      },
 
     }
   }

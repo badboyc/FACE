@@ -11,7 +11,7 @@
               <a-input placeholder="请输入名称" v-model="queryParam.docName"></a-input>
             </a-form-item>
           </a-col>
-          <a-col :md="6" :sm="8">
+         <!-- <a-col :md="6" :sm="8">
             <a-form-item label="标准书号">
               <a-input placeholder="请输入标准书号" v-model="queryParam.isbn"></a-input>
             </a-form-item>
@@ -32,7 +32,7 @@
               <a-input placeholder="请输入引用" v-model="queryParam.reference"></a-input>
             </a-form-item>
           </a-col>
-          </template>
+          </template>-->
           <a-col :md="6" :sm="8" >
             <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
               <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
@@ -187,11 +187,11 @@
             align:"center",
             dataIndex: 'createTime'
            },
-		   {
-            title: '更新时间',
-            align:"center",
-            dataIndex: 'updateTime'
-           },
+		   //{
+         //   title: '更新时间',
+           // align:"center",
+            //dataIndex: 'updateTime'
+           //},
           {
             title: '操作',
             dataIndex: 'action',
@@ -231,29 +231,11 @@
         // 新增/修改 成功时，重载列表
         this.loadData();
       },
-
-      // handleDownload: function (value) {
-      //   //window.open(value.downloadpath)
-      //   axios.get(value.downloadpath, {
-      //     responseType: 'arraybuffer', // 或者responseType: 'blob'
-      //     xsrfHeaderName: 'Authorization',
-      //     headers: {
-      //       'Content-Type': 'application/json',
-      //       'Authorization': 'Bearer ' + Vue.ls.get(ACCESS_TOKEN),
-      //     }
-      //   }).then(res => {
-      //     const blob = new Blob([res.data], {
-      //       type: 'application/vnd.ms-excel'
-      //     })
-      //     const objectUrl = URL.createObjectURL(blob)
-      //     window.location.href = objectUrl
-      //   }).catch(err => {
-      //     console.log(err)
-      //   })
-      // },
       handleDownload: function (value) {
-          console.log(value);
-          window.open(value.downloadpath);
+        var btn = document.createElement("a");
+        // btn.setAttribute('download', filename);// download属性
+        btn.setAttribute('href', value.downloadpath);// href链接
+        btn.click();//自执行点击事件
       },
     }
   }

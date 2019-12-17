@@ -18,36 +18,6 @@
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="6" :sm="8">
-              <a-form-item label="审核状态">
-                <a-select v-model="queryParam.reviewStatus" placeholder="请设置审核状态"   v-decorator="['reviewStatus', {}]" default-value="0">
-                  <a-select-option v-for="(item, key) in metastatus" :key="key" :value="item.value">
-              <span style="display: inline-block;width: 100%" :title=" item.text || item.label ">
-                {{ item.text || item.label }}
-              </span>
-                  </a-select-option>
-                  <!--            <a-select-option value="0">未处理</a-select-option>-->
-                  <!--            <a-select-option value="1">正在处理</a-select-option>-->
-                  <!--            <a-select-option value="2">处理完成</a-select-option>-->
-                </a-select>
-                <!--<a-input placeholder="请选择审核状态" v-model="queryParam.reviewStatus"></a-input>-->
-              </a-form-item>
-            </a-col>
-            <a-col :md="6" :sm="8">
-              <a-form-item label="版本状态">
-                <a-select  placeholder="请设置版本状态" @click="searchQuery"  v-model="queryParam.versionStatus" v-decorator="['versionStatus', {}]" default-value="0">
-                  <a-select-option v-for="(item, key) in versionstatus" :key="key" :value="item.value">
-              <span style="display: inline-block;width: 100%" :title=" item.text || item.label ">
-                {{ item.text || item.label }}
-              </span>
-                  </a-select-option>
-                  <!--            <a-select-option value="0">未处理</a-select-option>-->
-                  <!--            <a-select-option value="1">正在处理</a-select-option>-->
-                  <!--            <a-select-option value="2">处理完成</a-select-option>-->
-                </a-select>
-                <!--<a-input placeholder="请选择版本状态" v-model="queryParam.versionStatus"></a-input>-->
-              </a-form-item>
-            </a-col>
-            <a-col :md="6" :sm="8">
               <a-form-item label="创建人id">
                 <a-input placeholder="请输入创建人id" v-model="queryParam.createBy"></a-input>
               </a-form-item>
@@ -67,22 +37,6 @@
         </a-row>
       </a-form>
     </div>
-
-    <!-- 操作按钮区域 -->
-    <div class="table-operator">
-      <a-button @click="handleAdd" type="primary" icon="plus" v-has="'has2:provider'">发布新产品</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls('元数据')">导出</a-button>
-      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
-        <a-button type="primary" icon="import">导入</a-button>
-      </a-upload>
-      <a-dropdown v-if="selectedRowKeys.length > 0">
-        <a-menu slot="overlay">
-          <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
-        </a-menu>
-        <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down" /></a-button>
-      </a-dropdown>
-    </div>
-
     <!-- table区域-begin -->
     <div>
       <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
@@ -109,22 +63,8 @@
           <a-dropdown>
             <a class="ant-dropdown-link">操作 <a-icon type="down" /></a>
             <a-menu slot="overlay">
-              <a-menu-item v-has="'has1:status'">
-                  <a @click="handleEdit(record)" >审核</a>
-              </a-menu-item>
-              <a-menu-item v-has="'has2:provider'">
-                  <a href="javascript:;" @click="handleRemoveapply(record)" >申请移除</a>
-              </a-menu-item>
-              <a-menu-item v-has="'has1:status'">
-                  <a href="javascript:;" @click="handleRemove(record)">移除</a>
-              </a-menu-item>
               <a-menu-item>
                   <a href="javascript:;" @click="handleDownload(record)">下载</a>
-              </a-menu-item>
-              <a-menu-item v-has="'has1:status'">
-                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                  <a>删除</a>
-                </a-popconfirm>
               </a-menu-item>
             </a-menu>
           </a-dropdown>

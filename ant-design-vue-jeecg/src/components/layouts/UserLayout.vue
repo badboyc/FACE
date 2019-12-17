@@ -9,7 +9,7 @@
           </a>
         </div>
         <div class="desc" style="font-size: 33px">
-          中航工业计算所
+          机载软件可移植单元管理系统
         </div>
       </div>
 
@@ -22,7 +22,7 @@
           <a href="" target="_blank">条款</a>
         </div>
         <div class="copyright">
-          Copyright &copy; 2019 <a href="" target="_blank">中航工业</a> 出品
+          Copyright &copy; 2019 <a href="" target="_blank">西北工业大学服务计算实验室</a> 出品
         </div>
       </div>
     </div>
