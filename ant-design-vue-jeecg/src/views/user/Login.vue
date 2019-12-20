@@ -267,7 +267,7 @@
               // update-begin- --- author:scott ------ date:20190805 ---- for:密码加密逻辑暂时注释掉，有点问题
 
               that.Login(loginParams).then((res) => {
-                this.departConfirm(res)
+               this.departConfirm(res)
               }).catch((err) => {
                 that.requestFailed(err);
               });
