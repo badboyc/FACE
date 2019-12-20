@@ -152,7 +152,8 @@
           email:Vue.ls.get(USER_INFO).email,
           phone:Vue.ls.get(USER_INFO).phone,
           activitiSync:Vue.ls.get(USER_INFO).activitiSync,
-          birthday:Vue.ls.get(USER_INFO).birthday
+          birthday:Vue.ls.get(USER_INFO).birthday,
+          selectedroles:this.selectedRole
         },
         roleList:[],
         selectedRole:[],
@@ -213,14 +214,15 @@
           if(res.success){
             this.roleList = res.result;
           }else{
-            console.log(res.message);
+          //  console.log(res.message);
           }
         });
       },
       loadUserRoles(userid){
         queryUserRole({userid:userid}).then((res)=>{
           if(res.success){
-            this.selectedRole = res.result;
+            this.selectedRole = res.result;//result中的值为空
+            sessionStorage.setItem('currentUserRole',this.selectedRole);
           }else{
             console.log(res.message);
           }
@@ -281,6 +283,7 @@
         this.visible = false;
         this.disableSubmit = false;
         this.selectedRole = [];
+        this.selectedroles = [];
         this.userDepartModel = {userId:'',departIdList:[]};
         this.checkedDepartNames = [];
         this.checkedDepartNameString='';
@@ -289,8 +292,8 @@
       },
       moment,
       handleSubmit () {
-        console.log(this.form);
-        console.log(111);
+        var currentId=Vue.ls.get(USER_INFO).id;
+        this.loadUserRoles(currentId);
         const that = this;
         // 触发表单验证
         this.form.validateFields((err, values) => {
@@ -305,13 +308,10 @@
             // }
             let formData = Object.assign(this.model, values);
             formData.id=Vue.ls.get(USER_INFO).id;
-            console.log(222);
-            console.log(formData);
             formData.avatar = avatar;
-            //formData.selectedroles = this.selectedRole.length>0?this.selectedRole.join(","):'';
-            //formData.selecteddeparts = this.userDepartModel.departIdList.length>0?this.userDepartModel.departIdList.join(","):'';
-
-            // that.addDepartsToUser(that,formData); // 调用根据当前用户添加部门信息的方法
+              var currentUserRole=sessionStorage.getItem('currentUserRole');
+              console.log(currentUserRole);
+              formData.selectedroles =currentUserRole;
             let obj;
             obj=editUser(formData);
             // if(!this.model.id){
