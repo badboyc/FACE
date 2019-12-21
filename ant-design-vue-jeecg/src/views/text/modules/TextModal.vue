@@ -42,9 +42,8 @@
             :disabled="disabled"
             @onClick="onClick">
           </editor>
-          {{myValue}}
-          <p v-html='myValue'></p>
-
+<!--          {{myValue}}-->
+<!--          <p v-html='myValue'></p>-->
         </a-form-item>
       </a-form>
     </a-spin>
@@ -216,12 +215,10 @@
               that.confirmLoading = false;
               that.close();
             })
-
-
-
           }
         })
       },
+
       handleCancel () {
         this.close()
       },
