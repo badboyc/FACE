@@ -33,7 +33,9 @@
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="页面内容">
-        <div class="tinymce-editor">
+<!--
+          <div class="tinymce-editor" >
+-->
           <editor
             v-model="myValue"
             :init="init"
@@ -42,7 +44,7 @@
           </editor>
           {{myValue}}
           <p v-html='myValue'></p>
-        </div>
+
         </a-form-item>
       </a-form>
     </a-spin>
@@ -162,13 +164,19 @@
 
       add () {
         this.edit({});
+        this.clear();
       },
       edit (record) {
+        // console.log('777'+this.value),//this.value为undefined
+        // console.log('777'+record.content),
         this.form.resetFields();
         this.model = Object.assign({}, record);
+        console.log(this.model);//this.model中有值
+        this.myValue=this.model.content;
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'title','content','type'))
+        this.form.setFieldsValue(pick(this.model,'title','content','type'))
+
 		  //时间格式化
         });
 
