@@ -1,4 +1,5 @@
 import { UserLayout, TabLayout, RouteView, BlankLayout, PageView } from '@/components/layouts'
+import FirstPage from '@/FirstPage'
 
 /**
  * 走菜单，走权限控制
@@ -294,6 +295,11 @@ export const asyncRouterMap = [
  * @type { *[] }
  */
 export const constantRouterMap = [
+  {
+    path: '/',
+    name: 'FirstPage',
+    component: FirstPage,
+  },
   {
     path: '/user',
     component: UserLayout,
