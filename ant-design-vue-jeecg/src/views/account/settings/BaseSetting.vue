@@ -32,7 +32,7 @@
           <a-date-picker
             style="width: 100%"
             placeholder="请选择生日"
-            v-decorator="['birthday', {initialValue:!model.birthday?null:moment(model.birthday,dateFormat)}]"/>
+            v-decorator="['birthday', {initialValue:!model.birthday?null:moment(model.birthday,dateFormat)}]"></a-date-picker>
         </a-form-item>
 
         <a-form-item label="性别" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -152,7 +152,8 @@
           email:Vue.ls.get(USER_INFO).email,
           phone:Vue.ls.get(USER_INFO).phone,
           activitiSync:Vue.ls.get(USER_INFO).activitiSync,
-          birthday:Vue.ls.get(USER_INFO).birthday
+          birthday:Vue.ls.get(USER_INFO).birthday,
+          selectedroles:this.selectedRole
         },
         roleList:[],
         selectedRole:[],
@@ -213,14 +214,15 @@
           if(res.success){
             this.roleList = res.result;
           }else{
-            console.log(res.message);
+          //  console.log(res.message);
           }
         });
       },
       loadUserRoles(userid){
         queryUserRole({userid:userid}).then((res)=>{
           if(res.success){
-            this.selectedRole = res.result;
+            this.selectedRole = res.result;//result中的值为空
+            sessionStorage.setItem('currentUserRole',this.selectedRole);
           }else{
             console.log(res.message);
           }
@@ -281,6 +283,7 @@
         this.visible = false;
         this.disableSubmit = false;
         this.selectedRole = [];
+        this.selectedroles = [];
         this.userDepartModel = {userId:'',departIdList:[]};
         this.checkedDepartNames = [];
         this.checkedDepartNameString='';
@@ -289,31 +292,34 @@
       },
       moment,
       handleSubmit () {
-
+        var currentId=Vue.ls.get(USER_INFO).id;
+        this.loadUserRoles(currentId);
         const that = this;
         // 触发表单验证
         this.form.validateFields((err, values) => {
+            //console.log(that.model);初始值
           if (!err) {
             that.confirmLoading = true;
             let avatar = that.model.avatar;
-            if(!values.birthday){
-              values.birthday = '';
-            }else{
-              values.birthday = values.birthday.format(this.dateFormat);
-            }
+            // if(!values.birthday){
+            //   values.birthday = '';
+            // }else{
+            //   values.birthday = values.birthday.format(this.dateFormat);
+            // }
             let formData = Object.assign(this.model, values);
+            formData.id=Vue.ls.get(USER_INFO).id;
             formData.avatar = avatar;
-            formData.selectedroles = this.selectedRole.length>0?this.selectedRole.join(","):'';
-            formData.selecteddeparts = this.userDepartModel.departIdList.length>0?this.userDepartModel.departIdList.join(","):'';
-
-            // that.addDepartsToUser(that,formData); // 调用根据当前用户添加部门信息的方法
+              var currentUserRole=sessionStorage.getItem('currentUserRole');
+              console.log(currentUserRole);
+              formData.selectedroles =currentUserRole;
             let obj;
-            if(!this.model.id){
-              formData.id = this.userId;
-              obj=addUser(formData);
-            }else{
-              obj=editUser(formData);
-            }
+            obj=editUser(formData);
+            // if(!this.model.id){
+            //   formData.id = this.userId;
+            //   obj=addUser(formData);
+            // }else{
+            //   obj=editUser(formData);
+            // }
             obj.then((res)=>{
               if(res.success){
                 that.$message.success(res.message);

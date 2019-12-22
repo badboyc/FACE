@@ -177,6 +177,9 @@ export const JeecgListMixin = {
         }
       });
     },
+    // handleCheck(){
+    //   console.log('check');
+    // },
     handleEdit: function (record) {
       this.$refs.modalForm.edit(record);
       this.$refs.modalForm.title = "编辑";
