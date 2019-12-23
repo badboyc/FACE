@@ -15,13 +15,13 @@
           <li class="left-list">
             <div class="title">常用信息</div>
             <ul>
-              <li class="inner-list">关于美创</li>
-              <li class="inner-list">加入美创</li>
-              <li class="inner-list">年度培训</li>
+              <li class="inner-list">关于我们</li>
+              <li class="inner-list">加入我们</li>
+              <li class="inner-list">认证/验证</li>
             </ul>
           </li>
           <li class="left-list">
-            <div class="title">美创社区</div>
+            <div class="title">科技社区</div>
             <ul>
               <li class="inner-list">技术博客</li>
               <li class="inner-list">新闻资讯</li>
@@ -29,7 +29,7 @@
             </ul>
           </li>
           <li class="left-list">
-            <div class="title">联系美创</div>
+            <div class="title">联系我们</div>
             <ul>
               <li class="inner-list">分支机构</li>
             </ul>
@@ -40,12 +40,12 @@
         <div class="right-content">
           <div class="inner">
             <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
-            <span class="text">美创订阅号</span>
+            <span class="text">订阅号</span>
             <img src="http://www.mchz.com.cn/meichuang/src/images/common/service.png">
           </div>
           <div class="inner">
             <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
-            <span class="text">美创服务号</span>
+            <span class="text">服务号</span>
             <img src="http://www.mchz.com.cn/meichuang/src/images/common/subscribe.png">
           </div>
           <div class="telephone">
@@ -57,7 +57,7 @@
     </div>
     <div class="footer-bottom">
       <img src="http://www.mchz.com.cn/meichuang/src/images/common/net-security.gif">
-      <span class="text">版权所有 杭州美创科技有限公司 Copyright 2005-2016,All rights reserverd. 浙ICP备 09009762号-1</span>
+      <span class="text">版权所有 西北工业大学服务计算实验室 Copyright 2019,All rights reserverd.</span>
     </div>
   </div>
 </template>

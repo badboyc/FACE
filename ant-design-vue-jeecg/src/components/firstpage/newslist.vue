@@ -1,55 +1,97 @@
 <template>
   <div class="content">
     <div class="title">行业动态</div>
-    <ul class="list-content">
-      <li class="list-item" v-for="item in content">
-        <div class="border">
-          <div class="img">
-            <img :src="item.imgUrl" width="285" height="237" alt="">
-          </div>
-          <div class="name">{{item.name}}</div>
-          <div class="text">{{item.text}}</div>
-        </div>
-      </li>
-    </ul>
-  </div>
+  <a-card :bordered="false">
+      <a-list itemLayout="horizontal" :dataSource="dataSource" :pagination="ipagination">
+        <a-list-item slot="renderItem" slot-scope="item, index">
+          <a-list-item-meta
+            :description=item.createTime
+          >
+            <a slot="title" @click="handleDetail(item)" >{{item.title}}</a>
+          </a-list-item-meta>
+        </a-list-item>
+      </a-list>
+    <!-- table区域-end -->
 
+    <!-- 表单区域 -->
+    <newsdetail ref="modalForm2" @ok="modalFormOk"></newsdetail>
+  </a-card>
+  </div>
 </template>
 
-<script type="text/ecmascript-6">
-  export default{
-    data() {
+<script>
+  import { JeecgListMixin } from '@/mixins/JeecgListMixin'
+  import newsdetail from '@/components/firstpage/newsdetail.vue'
+  export default {
+    name: "TextList",
+    mixins:[JeecgListMixin],
+    components: {
+      newsdetail
+    },
+    data () {
       return {
-        content: [
+        description: '文本编辑管理页面',
+        // 表头
+        columns: [
           {
-            'name': '数据安全',
-            'imgUrl': 'http://www.mchz.com.cn/meichuang/src/images/index/pic-product-01.jpg',
-            'text': '围绕核心数据保护，通过建立两个基础、管好三类资产、区分两类应用、管好三类人员，构建了由内而外的层层防御体系，' +
-              '全方位构建敏感数据保护解决方案。'
+            title: '#',
+            dataIndex: '',
+            key:'rowIndex',
+            width:60,
+            align:"center",
+            customRender:function (t,r,index) {
+              return parseInt(index)+1;
+            }
           },
           {
-            'name': '容灾备份',
-            'imgUrl': 'http://www.mchz.com.cn/meichuang/src/images/index/pic-product-02.jpg',
-            'text': '以业务系统为视角单元进行容灾建设； 以数据恢复、恢复管理为中心建设备份系统。'
+            title: '标题',
+            align:"center",
+            dataIndex: 'title'
           },
           {
-            'name': '数据安全',
-            'imgUrl': 'http://www.mchz.com.cn/meichuang/src/images/index/pic-product-03.jpg',
-            'text': '遵循数据集成规范与标准，集成多样化数据，为不同机构提供数据开放和数据交换等应用，以及数据集成、治理、分析、决策等功能。'
+            title: '发布人',
+            align:"center",
+            dataIndex: 'createBy'
           },
           {
-            'name': 'IT维保服务',
-            'imgUrl': 'http://www.mchz.com.cn/meichuang/src/images/index/pic-product-04.jpg',
-            'text': 'ORACLE、IBM DB2、SQL SERVER, Mysql等数据库维保、Goldengate维保、 Weblogic维保。'
+            title: '发布时间',
+            align:"center",
+            dataIndex: 'createTime'
+          },
+          {
+            title: '文本类型',
+            align:"center",
+            dataIndex: 'type'
+          },
+          {
+            title: '操作',
+            dataIndex: 'action',
+            align:"center",
+            scopedSlots: { customRender: 'action' },
           }
-
-        ]
-
+        ],
+        url: {
+          list: "/text/text/list",
+          delete: "/text/text/delete",
+          deleteBatch: "/text/text/deleteBatch",
+          exportXlsUrl: "text/text/exportXls",
+          importExcelUrl: "text/text/importExcel",
+        },
       }
+    },
+    computed: {
+    },
+    methods: {
+      handleDetail: function (item) {
+        this.$refs.modalForm2.detail(item);
+      },
+
     }
   }
 </script>
-
+<style scoped>
+  @import '~@assets/less/common.less'
+</style>
 <style lang="stylus" rel="stylesheet/stylus">
   .content
     width 1200px

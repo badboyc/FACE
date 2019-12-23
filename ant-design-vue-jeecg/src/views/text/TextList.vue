@@ -123,11 +123,16 @@
             align:"center",
             dataIndex: 'title'
            },
-		   /*{
-            title: 'html页面内容',
+		   {
+            title: '发布人',
             align:"center",
-            dataIndex: 'content'
-           },*/
+            dataIndex: 'createBy'
+           },
+          {
+            title: '发布时间',
+            align:"center",
+            dataIndex: 'createTime'
+          },
 		   {
             title: '文本类型',
             align:"center",
