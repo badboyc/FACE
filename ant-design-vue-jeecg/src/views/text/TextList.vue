@@ -12,8 +12,15 @@
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
-            <a-form-item label="文本类型">
+            <!--<a-form-item label="文本类型">
               <a-input placeholder="请输入文本类型" v-model="queryParam.type"></a-input>
+            </a-form-item>-->
+            <a-form-item label="文本类型">
+              <a-select v-model="queryParam.type" placeholder="请输入文本类型">
+                <a-select-option value="1">新闻</a-select-option>
+                <a-select-option value="2">简介</a-select-option>
+                <a-select-option value="3">图片</a-select-option>
+              </a-select>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8" >
@@ -72,9 +79,9 @@
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
-              <a-menu-item>
+             <!-- <a-menu-item>
               <a @click="handleCheck">查看</a>
-              </a-menu-item>
+              </a-menu-item>-->
               <a-menu-item>
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
                   <a>删除</a>
@@ -124,20 +131,20 @@
             dataIndex: 'title'
            },
 		   {
-            title: '发布人',
-            align:"center",
-            dataIndex: 'createBy'
-           },
-          {
-            title: '发布时间',
-            align:"center",
-            dataIndex: 'createTime'
-          },
-		   {
             title: '文本类型',
             align:"center",
             dataIndex: 'type'
            },
+            {
+                title: '发布人',
+                align:"center",
+                dataIndex: 'createBy'
+            },
+            {
+                title: '发布时间',
+                align:"center",
+                dataIndex: 'createTime'
+            },
           {
             title: '操作',
             dataIndex: 'action',

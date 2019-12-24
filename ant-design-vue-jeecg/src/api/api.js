@@ -18,6 +18,7 @@ const queryall = (params)=>getAction("/sys/role/queryall",params);
 const addUser = (params)=>postAction("/sys/user/add",params);
 const editUser = (params)=>putAction("/sys/user/edit",params);
 const queryUserRole = (params)=>getAction("/sys/user/queryUserRole",params);
+const queryUserInfo = (params)=>getAction("/sys/user/queryById",params);
 const getUserList = (params)=>getAction("/sys/user/list",params);
 // const deleteUser = (params)=>deleteAction("/sys/user/delete",params);
 // const deleteUserList = (params)=>deleteAction("/sys/user/deleteBatch",params);

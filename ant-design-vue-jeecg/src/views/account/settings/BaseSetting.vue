@@ -9,7 +9,7 @@
         <a-form-item label="昵称" :labelCol="labelCol" :wrapperCol="wrapperCol" >
           <a-input placeholder="请输入昵称" v-decorator="[ 'realname', validatorRules.realname]" />
         </a-form-item>
-        <a-form-item label="头像" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <!--<a-form-item label="头像" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-upload
             listType="picture-card"
             class="avatar-uploader"
@@ -26,7 +26,7 @@
               <div class="ant-upload-text">上传</div>
             </div>
           </a-upload>
-        </a-form-item>
+        </a-form-item>-->
 
         <a-form-item label="生日" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-date-picker
@@ -75,7 +75,7 @@
   import departWindow from '@/views/system/modules/DepartWindow'
   import { ACCESS_TOKEN } from "@/store/mutation-types"
   import { getAction } from '@/api/manage'
-  import {addUser,editUser,queryUserRole,queryall } from '@/api/api'
+  import {addUser,editUser,queryUserRole,queryall,queryUserInfo } from '@/api/api'
   import { disabledAuthFilter } from "@/utils/authFilter"
   import {duplicateCheck } from '@/api/api'
   import { USER_INFO} from "@/store/mutation-types"
@@ -109,30 +109,6 @@
               validator: this.validateUsername,
             }]
           },
-          password:{
-            rules: [{
-              //   required: true,
-              //   pattern:/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,./]).{8,}$/,
-              //   message: '密码由8位数字、大小写字母和特殊符号组成!'
-              // }, {
-              //   validator: this.validateToNextPassword,
-              // }],
-              required: true,
-              //pattern:/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,./]).{8,}$/,
-              message: '初始默认密码6个0!'
-            }, {
-              //validator: this.validateToNextPassword,
-            }],
-            initialValue: '000000'
-          },
-          confirmpassword:{
-            rules: [{
-              required: true, message: '初始默认密码6个0',
-            }, {
-              //validator: this.compareToFirstPassword,
-            }],
-            initialValue: '000000'
-          },
           realname:{rules: [{ required: true, message: '请输入用户名称!' }]},
           phone:{rules: [{validator: this.validatePhone}]},
           email:{
@@ -146,13 +122,13 @@
         title:"操作",
         visible: true,
         model: {
-          username:Vue.ls.get(USER_INFO).username,
-          sex:Vue.ls.get(USER_INFO).sex,
-          realname:Vue.ls.get(USER_INFO).realname,
-          email:Vue.ls.get(USER_INFO).email,
-          phone:Vue.ls.get(USER_INFO).phone,
-          activitiSync:Vue.ls.get(USER_INFO).activitiSync,
-          birthday:Vue.ls.get(USER_INFO).birthday,
+          username:JSON.parse(sessionStorage.getItem('userInfo')).username,//
+          sex:JSON.parse(sessionStorage.getItem('userInfo')).sex,
+          realname:JSON.parse(sessionStorage.getItem('userInfo')).realname,
+          email:JSON.parse(sessionStorage.getItem('userInfo')).email,
+          phone:JSON.parse(sessionStorage.getItem('userInfo')).phone,
+          activitiSync:JSON.parse(sessionStorage.getItem('userInfo')).activitiSync,
+          birthday:JSON.parse(sessionStorage.getItem('userInfo')).birthday,
           selectedroles:this.selectedRole
         },
         roleList:[],
@@ -176,12 +152,14 @@
           userWithDepart: "/sys/user/userDepartList", // 引入为指定用户查看部门信息需要的url
           userId:"/sys/user/generateUserId", // 引入生成添加用户情况下的url
           syncUserByUserName:"/process/extActProcess/doSyncUserByUserName",//同步用户到工作流
+          userInfo: `/sys/user/queryById?id=${Vue.ls.get(USER_INFO).id}`,
         },
       }
     },
     created () {
       const token = Vue.ls.get(ACCESS_TOKEN);
       this.headers = {"X-Access-Token":token};
+      this.loadUserInfo();
       // 调用此方法,根据屏幕宽度自适应调整抽屉的宽度
       let that = this;
       that.checkedDepartNameString = "";
@@ -228,6 +206,16 @@
           }
         });
       },
+      loadUserInfo(){
+        getAction(this.url.userInfo).then((res)=>{
+                if(res.success){
+                    this.userInfo = res.result;//result中的值为空
+                    sessionStorage.setItem('userInfo',JSON.stringify(this.userInfo));
+                }else{
+                    console.log(res.message);
+                }
+            });
+        },
       refresh () {
         this.selectedDepartKeys=[];
         this.checkedDepartKeys=[];
@@ -310,7 +298,7 @@
             formData.id=Vue.ls.get(USER_INFO).id;
             formData.avatar = avatar;
               var currentUserRole=sessionStorage.getItem('currentUserRole');
-              console.log(currentUserRole);
+              //console.log(currentUserRole);
               formData.selectedroles =currentUserRole;
             let obj;
             obj=editUser(formData);
@@ -322,6 +310,7 @@
             // }
             obj.then((res)=>{
               if(res.success){
+                that.loadUserInfo(formData.id);
                 that.$message.success(res.message);
                 that.$emit('ok');
               }else{

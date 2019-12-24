@@ -21,7 +21,12 @@
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="文本类型">
-          <a-input-number v-decorator="[ 'type', {}]" />
+          <!--<a-input-number v-decorator="[ 'type', {}]" />-->
+          <a-select v-decorator="[ 'type', {}]" placeholder="请输入文本类型">
+            <a-select-option :value="1">新闻</a-select-option>
+            <a-select-option :value="2">简介</a-select-option>
+            <a-select-option :value="3">图片</a-select-option>
+          </a-select>
         </a-form-item>
         <!--<a-form-item
           :labelCol="labelCol"
@@ -42,8 +47,8 @@
             :disabled="disabled"
             @onClick="onClick">
           </editor>
-<!--          {{myValue}}-->
-<!--          <p v-html='myValue'></p>-->
+          <!--{{myValue}}
+          <p v-html='myValue'></p>-->
         </a-form-item>
       </a-form>
     </a-spin>
