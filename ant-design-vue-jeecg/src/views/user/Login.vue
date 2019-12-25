@@ -268,6 +268,7 @@
 
               that.Login(loginParams).then((res) => {
                this.departConfirm(res)
+               sessionStorage.setItem('userInfo',JSON.stringify(res.result.userInfo));
               }).catch((err) => {
                 that.requestFailed(err);
               });
