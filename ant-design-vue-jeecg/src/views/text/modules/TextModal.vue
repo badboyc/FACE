@@ -56,9 +56,8 @@
 </template>
 
 <script>
-  import { httpAction } from '@/api/manage'
+  import { httpAction,postAction } from '@/api/manage'
   import pick from 'lodash.pick'
-  /********************************************************************************************/
   import tinymce from 'tinymce/tinymce'
   import Editor from '@tinymce/tinymce-vue'
   import 'tinymce/themes/silver/theme'
@@ -72,12 +71,18 @@
   import 'tinymce/plugins/colorpicker'
   import 'tinymce/plugins/textcolor'
   import 'tinymce/plugins/fullscreen'
-  /****************************************************************************************/
+  import '@/views/jeecg/JUpload'
   import moment from "moment"
-
+  var urlPath = window.document.location.href;
+  // console.log('urlpath '+urlPath);//http://localhost:3000/text/add
+  var docPath = window.document.location.pathname;
+  // console.log('docpath '+docPath);// /text/add
+  var index = urlPath.indexOf(docPath);
+  // console.log('index '+index);
+  var serverPath = urlPath.substring(0, index);
+  // console.log('serverpath '+serverPath)
   export default {
     name: "TextModal",
-      /*******************************************************************************/
       components: {
           Editor
       },
@@ -104,10 +109,8 @@
               default: 'undo redo |  formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | lists image media table | removeformat | fullscreen'
           }
       },
-      /*********************************************************************************************************************/
     data () {
       return {
-      /****************************************************************************************************/
           init: {
               language_url: '/tinymce/langs/zh_CN.js',
               language: 'zh_CN',
@@ -117,13 +120,22 @@
               toolbar: this.toolbar,
               branding: false,
               menubar: false,
-              images_upload_handler: (blobInfo, success) => {
-                  const img = 'data:image/jpeg;base64,' + blobInfo.base64()
-                  success(img)
+              // images_upload_handler: (blobInfo, success) => {
+              //     const img = 'data:image/jpeg;base64,' + blobInfo.base64()
+              //     console.log('i donnot do this')
+              //     success(img)
+              // }
+              images_upload_handler: (url, success) => {
+               this.pictureUpload();
+               console.log('我又又又在在这里了');
+               var url="http://localhost:8080"+"/jeecg-boot"+"/sys/common/upload";
+               const img = url
+               console.log('i donnot do this')
+               success(img)
               }
+
           },
           myValue:this.value,
-      /****************************************************************************************************/
         title:"操作",
         visible: false,
         model: {},
@@ -143,19 +155,18 @@
         url: {
           add: "/text/text/add",
           edit: "/text/text/edit",
+          fileUpload:window._CONFIG['domianURL']+"/sys/common/upload",
         },
       }
     },
-    /********************************************************************************/
       mounted() {
           tinymce.init({})
       },
-    /********************************************************************************/
-
     created () {
+        const token = Vue.ls.get(ACCESS_TOKEN);
+        this.headers = {"X-Access-Token":token};
     },
     methods: {
-    /*******************************************************************************/
         onClick(e) {
             this.$emit('onClick', e, tinymce)
         },
@@ -163,8 +174,16 @@
         clear() {
             this.myValue = ''
         },
-    /*******************************************************************************/
-
+      pictureUpload(){
+          console.log('我现在在这里了');
+          postAction(this.url.fileUpload).then((res)=>{
+              if(res.success){
+                  console.log(res);
+              }else{
+                  console.log(res.message);
+              }
+          });
+      },
 
       add () {
         this.edit({});
