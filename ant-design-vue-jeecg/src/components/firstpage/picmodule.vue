@@ -11,7 +11,7 @@
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
       <div class="item active">
-        <img src="./pic-banner-01.jpg" alt="First-side">
+        <img src="http:/jeecg-boot/sys/download/download/files/20191225/pic1_1577283829040.jpg" alt="First-side">
       </div>
       <div class="item">
         <img src="./pic-banner-02.png" alt="Second-side">

@@ -6,10 +6,10 @@
           <li class="left-list">
             <div class="title">产品</div>
             <ul>
-              <li class="inner-list">数据安全</li>
-              <li class="inner-list">容灾备份</li>
-              <li class="inner-list">大数据</li>
-              <li class="inner-list">IT维保服务</li>
+              <li class="inner-list">航电系统</li>
+              <li class="inner-list">软件</li>
+              <li class="inner-list">硬件</li>
+              <li class="inner-list">其他</li>
             </ul>
           </li>
           <li class="left-list">
@@ -41,12 +41,12 @@
           <div class="inner">
             <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
             <span class="text">订阅号</span>
-            <img src="http://www.mchz.com.cn/meichuang/src/images/common/service.png">
+            <img src="">
           </div>
           <div class="inner">
             <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
             <span class="text">服务号</span>
-            <img src="http://www.mchz.com.cn/meichuang/src/images/common/subscribe.png">
+            <img src="">
           </div>
           <div class="telephone">
             <span class="glyphicon glyphicon-phone" aria-hidden="true"></span>

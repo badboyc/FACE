@@ -9,8 +9,12 @@ import java.io.OutputStream;
 import java.sql.Blob;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.jeecg.common.api.vo.Result;
@@ -84,11 +88,42 @@ public class CommonController {
 		}
 		return result;
 	}
+    @PostMapping("/uploadImg")
+    @ResponseBody
+    public Map<String, Object> uploadImg(HttpServletRequest request, HttpServletResponse response) {
+		Map<String, Object> ret = new HashMap<>(2);
+		try {
+			String ctxPath = uploadpath;
+			String fileName = null;
+			String bizPath = "files";
+			String nowday = new SimpleDateFormat("yyyyMMdd").format(new Date());
+			File file = new File(ctxPath + File.separator + bizPath + File.separator + nowday);
+			if (!file.exists()) {
+				file.mkdirs();// 创建文件根目录
+			}
+			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+			MultipartFile mf = multipartRequest.getFile("file");// 获取上传文件对象
+			String orgName = mf.getOriginalFilename();// 获取文件名
+			fileName = orgName.substring(0, orgName.lastIndexOf(".")) + "_" + System.currentTimeMillis() + orgName.substring(orgName.indexOf("."));
+			String savePath = file.getPath() + File.separator + fileName;
+			File savefile = new File(savePath);
+			FileCopyUtils.copy(mf.getBytes(), savefile);
+			String dbpath = bizPath + File.separator + nowday + File.separator + fileName;
+			if (dbpath.contains("\\")) {
+				dbpath = dbpath.replace("\\", "/");
+			}
+			String filePath = "http://localhost:3000/jeecg-boot/sys/common/download/"+ dbpath;
+			ret.put("location", filePath);
+		} catch (IOException e) {
+			log.error(e.getMessage(), e);
+		}
+		return ret;
+	}
 
 	/**
 	 * 预览图片
 	 * 请求地址：http://localhost:8080/common/view/{user/20190119/e1fe9925bc315c60addea1b98eb1cb1349547719_1547866868179.jpg}
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -136,14 +171,14 @@ public class CommonController {
 		}
 
 	}
-	
+
 	/**
 	 * 下载文件
 	 * 请求地址：http://localhost:8080/common/download/{user/20190119/e1fe9925bc315c60addea1b98eb1cb1349547719_1547866868179.jpg}
-	 * 
+	 *
 	 * @param request
 	 * @param response
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@AutoLog(value = "下载文件")
 	@GetMapping(value = "/download/**")
@@ -182,7 +217,7 @@ public class CommonController {
 				 }*/
 				 //*********************这是一条分割线**************************
 	         }
-			
+
 		} catch (Exception e) {
 			log.info("文件下载失败" + e.getMessage());
 			// e.printStackTrace();
@@ -216,7 +251,7 @@ public class CommonController {
 	}
 
 	/**
-	  *  把指定URL后的字符串全部截断当成参数 
+	  *  把指定URL后的字符串全部截断当成参数
 	  *  这么做是为了防止URL中包含中文或者特殊字符（/等）时，匹配不了的问题
 	 * @param request
 	 * @return
@@ -226,5 +261,5 @@ public class CommonController {
 		String bestMatchPattern = (String) request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
 		return new AntPathMatcher().extractPathWithinPattern(bestMatchPattern, path);
 	}
-	
+
 }

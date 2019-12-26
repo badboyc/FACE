@@ -8,18 +8,18 @@
 
           <a-col :md="6" :sm="8">
             <a-form-item label="产品名称">
-              <a-input placeholder="请输入产品名称" v-model="queryParam.productName"></a-input>
+              <j-input placeholder="请输入产品名称" v-model="queryParam.productName"></j-input>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="供应商名称">
-              <a-input placeholder="请输入供应商名称" v-model="queryParam.supplierName"></a-input>
+              <j-input placeholder="请输入供应商名称" v-model="queryParam.supplierName"></j-input>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="6" :sm="8">
               <a-form-item label="创建人id">
-                <a-input placeholder="请输入创建人id" v-model="queryParam.createBy"></a-input>
+                <j-input placeholder="请输入创建人id" v-model="queryParam.createBy"></j-input>
               </a-form-item>
             </a-col>
           </template>
@@ -89,12 +89,14 @@
   import { getAction,putAction } from '@/api/manage'
   import { ACCESS_TOKEN } from "@/store/mutation-types"
   import { axios } from '@/utils/request'
+  import JInput from '@/components/jeecg/JInput.vue'
   export default {
     name: "MetaDataList",
     mixins:[JeecgListMixin],
     components: {
       MetaDataModal,
-      showmeta
+      showmeta,
+      'j-input': JInput
     },
     data () {
       return {

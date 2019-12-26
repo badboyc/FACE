@@ -9,7 +9,7 @@ import { generateIndexRouter } from "@/utils/util"
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const whiteList = ['/user/login', '/user/register', '/user/register-result','/user/alteration','/'] // no redirect whitelist
+const whiteList = ['/user/login', '/user/register', '/user/register-result','/Aboutus/','/user/alteration','/','/Newslist/','/Docandtoolslist/','/Consistencywork/'] // no redirect whitelist
 
 router.beforeEach((to, from, next) => {
   NProgress.start() // start progress bar
@@ -58,7 +58,7 @@ router.beforeEach((to, from, next) => {
       }
     }
   } else {
-    if (whiteList.indexOf(to.path) !== -1) {
+    if (whiteList.indexOf(to.path) !== -1||to.path.substring(0,13)=="/NewsContent/"||to.path.substring(0,20)=="/Docandtoolscontent/"||to.path.substring(0,20)=="/Consistencycontent/") {
       // 在免登录白名单，直接进入
       next()
     } else {

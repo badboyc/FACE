@@ -27,7 +27,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 @Accessors(chain = true)
 @ApiModel(value="text对象", description="文本编辑")
 public class Text {
-    
+
 	/**主键id*/
 	@TableId(type = IdType.UUID)
     @ApiModelProperty(value = "主键id")
@@ -43,7 +43,7 @@ public class Text {
 	/**文本类型*/
 	@Excel(name = "文本类型", width = 15)
     @ApiModelProperty(value = "文本类型")
-	private java.lang.Integer type;
+	private java.lang.String type;
 	/**创建时间*/
 	@Excel(name = "创建时间", width = 20, format = "yyyy-MM-dd HH:mm:ss")
 	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")

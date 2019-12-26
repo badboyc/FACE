@@ -7,10 +7,10 @@
     @ok="handleOk"
     @cancel="handleCancel"
     cancelText="关闭">
-    
+
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
-      
+
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
@@ -58,6 +58,9 @@
 <script>
   import { httpAction } from '@/api/manage'
   import pick from 'lodash.pick'
+  import { postAction } from '@/api/manage'
+  import Vue from 'vue'
+  import { ACCESS_TOKEN } from "@/store/mutation-types"
   /********************************************************************************************/
   import tinymce from 'tinymce/tinymce'
   import Editor from '@tinymce/tinymce-vue'
@@ -74,6 +77,10 @@
   import 'tinymce/plugins/fullscreen'
   /****************************************************************************************/
   import moment from "moment"
+  var urlPath = window.document.location.href;
+  var docPath = window.document.location.pathname;
+  var index = urlPath.indexOf(docPath);
+  var serverPath = urlPath.substring(0, index);
 
   export default {
     name: "TextModal",
@@ -117,11 +124,13 @@
               toolbar: this.toolbar,
               branding: false,
               menubar: false,
-              images_upload_handler: (blobInfo, success) => {
-                  const img = 'data:image/jpeg;base64,' + blobInfo.base64()
-                  success(img)
-              }
-          },
+             //images_upload_handler: (blobInfo, success) => {
+               //   const img = 'data:image/jpeg;base64,' + blobInfo.base64()
+                 //    success(img)
+              //}
+            images_upload_url:serverPath+"/jeecg-boot"+"/sys/common/uploadImg"
+
+       },
           myValue:this.value,
       /****************************************************************************************************/
         title:"操作",
@@ -143,12 +152,14 @@
         url: {
           add: "/text/text/add",
           edit: "/text/text/edit",
+          uploadAction:serverPath+"/jeecg-boot"+"/sys/common//uploadImg",
         },
       }
     },
     /********************************************************************************/
       mounted() {
-          tinymce.init({})
+          tinymce.init({
+          })
       },
     /********************************************************************************/
 
@@ -163,6 +174,16 @@
         clear() {
             this.myValue = ''
         },
+      pictureUpload(){
+        console.log('我现在在这里了');
+        postAction(this.url.uploadAction).then((res)=>{
+          if(res.success){
+            console.log(res);
+          }else{
+            console.log(res.message);
+          }
+        });
+      },
     /*******************************************************************************/
 
 
