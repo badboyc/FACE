@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.sql.Blob;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -112,7 +113,10 @@ public class CommonController {
 			if (dbpath.contains("\\")) {
 				dbpath = dbpath.replace("\\", "/");
 			}
-			String filePath = "http://localhost:3000/jeecg-boot/sys/common/download/"+ dbpath;
+			String ip = InetAddress.getLocalHost().getHostAddress();
+			int port=request.getLocalPort(); //获取服务器端口
+//			String ip = InetAddress.getLocalHost().getHostAddress();
+			String filePath ="http://"+ip+":3001/jeecg-boot/sys/common/download/"+ dbpath;
 			ret.put("location", filePath);
 		} catch (IOException e) {
 			log.error(e.getMessage(), e);
