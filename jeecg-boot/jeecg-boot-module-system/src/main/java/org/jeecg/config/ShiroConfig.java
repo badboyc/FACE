@@ -28,10 +28,10 @@ import org.springframework.context.annotation.DependsOn;
 
 @Configuration
 public class ShiroConfig {
-	
+
 	/**
-	 * Filter Chain定义说明 
-	 * 
+	 * Filter Chain定义说明
+	 *
 	 * 1、一个URL可以配置多个Filter，使用逗号分隔
 	 * 2、当设置多个过滤器时，全部验证通过，才视为通过
 	 * 3、部分过滤器可指定参数，如perms，roles
@@ -49,7 +49,7 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/sys/logout", "anon"); //登出接口排除
 		filterChainDefinitionMap.put("/sys/getEncryptedString", "anon"); //获取加密串
 		filterChainDefinitionMap.put("/sys/sms", "anon");//短信验证码
-		filterChainDefinitionMap.put("/sys/phoneLogin", "anon");//手机登录		
+		filterChainDefinitionMap.put("/sys/phoneLogin", "anon");//手机登录
 		filterChainDefinitionMap.put("/sys/user/checkOnlyUser", "anon");//校验用户是否存在
 		filterChainDefinitionMap.put("/sys/user/register", "anon");//用户注册
 		filterChainDefinitionMap.put("/sys/user/querySysUser", "anon");//根据手机号获取用户信息
@@ -72,6 +72,9 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/**/*.png", "anon");
 		filterChainDefinitionMap.put("/**/*.ico", "anon");
 		filterChainDefinitionMap.put("/text/text/list", "anon");
+		filterChainDefinitionMap.put("/doc/doc/list", "anon");
+		filterChainDefinitionMap.put("/sys/common/uploadImg", "anon");
+        filterChainDefinitionMap.put("/sys/common/upload", "anon");
 
 		// update-begin--Author:sunjianlei Date:20190813 for：排除字体格式的后缀
 		filterChainDefinitionMap.put("/**/*.ttf", "anon");
@@ -83,7 +86,7 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/swagger**/**", "anon");
 		filterChainDefinitionMap.put("/webjars/**", "anon");
 		filterChainDefinitionMap.put("/v2/**", "anon");
-		
+
 		//性能监控
 		filterChainDefinitionMap.put("/actuator/metrics/**", "anon");
 		filterChainDefinitionMap.put("/actuator/httptrace/**", "anon");
@@ -92,16 +95,16 @@ public class ShiroConfig {
 
 		filterChainDefinitionMap.put("/test/jeecgDemo/demo3", "anon"); //模板测试
 		filterChainDefinitionMap.put("/test/jeecgDemo/redisDemo/**", "anon"); //redis测试
-		
+
 
 
 		//排除Online请求
 		filterChainDefinitionMap.put("/auto/cgform/**", "anon");
 		//websocket排除
 		filterChainDefinitionMap.put("/websocket/**", "anon");
-		
-		
-	
+
+
+
 		// 添加自己的过滤器并且取名为jwt
 		Map<String, Filter> filterMap = new HashMap<String, Filter>(1);
 		filterMap.put("jwt", new JwtFilter());

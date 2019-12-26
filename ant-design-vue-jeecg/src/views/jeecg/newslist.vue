@@ -1,21 +1,15 @@
 <template>
-  <div id="FirstPage">
+  <div id="newslist">
     <v-header></v-header>
-    <v-picmodule></v-picmodule>
-    <v-news></v-news>
-    <v-consistency></v-consistency>
-    <v-footer></v-footer>
+    <v-list></v-list>
   </div>
 </template>
 
 <script>
   import header from '@/components/firstpage/header.vue'
-  import picmodule from '@/components/firstpage/picmodule.vue'
-  import consistency from '@/components/consistency/consistency.vue'
-  import news from '@/components/firstpage/news.vue'
-  import footer from '@/components/firstpage/footer.vue'
+  import list from '@/components/firstpage/list.vue'
   export default {
-    name: 'FirstPage',
+    name: 'newslist',
     data(){
       return {
       }
@@ -26,10 +20,7 @@
     },
     components: {
       'v-header': header,
-      'v-picmodule': picmodule,
-      'v-consistency': consistency,
-      'v-news': news,
-      'v-footer': footer
+      'v-list': list,
     }
 
   }

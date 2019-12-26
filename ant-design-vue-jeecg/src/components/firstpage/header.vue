@@ -7,7 +7,7 @@
       <nav class="topbar">
         <ul>
           <li class="nav-item" v-for="item in navs">
-            <a class="nav-name" :href="item.sourceUrl">{{item.name}}</a>
+            <router-link :to=item.path class="nav-name" >{{item.name}}</router-link>
           </li>
           <li class="nav-item">
             <router-link :to="{ path: '/user/login' }">登录</router-link>
@@ -24,11 +24,11 @@
     data(){
       return {
         navs: [
-          {name: '首页', sourceUrl: 'http://www.mchz.com.cn/meichuang/html/data_security_center/index.html'},
-          {name: '行业动态', sourceUrl: 'http://www.mchz.com.cn/meichuang/html/backup_security_center/index.html'},
-          {name: '一致性工作', sourceUrl: 'http://www.mchz.com.cn/meichuang/html/big_data_center/index.html'},
-          {name: '文件和工具', sourceUrl: 'http://www.mchz.com.cn/meichuang/html/sre_center/index.html'},
-          {name: '了解更多', sourceUrl: 'http://www.mchz.com.cn/meichuang/html/about_us/about.html'},
+          {name: '首页', path: "/"},
+          {name: '行业动态', path: "/Newslist/"},
+          {name: '一致性工作', path: "/Consistencywork/"},
+          {name: '规范/工具', path: '/Docandtoolslist/'},
+          {name: '了解更多', path: '/Aboutus/'},
         ],
         moreInformation:true,
         nomoreInformation:false

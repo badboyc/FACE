@@ -56,8 +56,12 @@
 </template>
 
 <script>
-  import { httpAction,postAction } from '@/api/manage'
+  import { httpAction } from '@/api/manage'
   import pick from 'lodash.pick'
+  import { postAction } from '@/api/manage'
+  import Vue from 'vue'
+  import { ACCESS_TOKEN } from "@/store/mutation-types"
+  /********************************************************************************************/
   import tinymce from 'tinymce/tinymce'
   import Editor from '@tinymce/tinymce-vue'
   import 'tinymce/themes/silver/theme'
@@ -74,13 +78,10 @@
   import '@/views/jeecg/JUpload'
   import moment from "moment"
   var urlPath = window.document.location.href;
-  // console.log('urlpath '+urlPath);//http://localhost:3000/text/add
   var docPath = window.document.location.pathname;
-  // console.log('docpath '+docPath);// /text/add
   var index = urlPath.indexOf(docPath);
-  // console.log('index '+index);
   var serverPath = urlPath.substring(0, index);
-  // console.log('serverpath '+serverPath)
+
   export default {
     name: "TextModal",
       components: {
@@ -120,22 +121,15 @@
               toolbar: this.toolbar,
               branding: false,
               menubar: false,
-              // images_upload_handler: (blobInfo, success) => {
-              //     const img = 'data:image/jpeg;base64,' + blobInfo.base64()
-              //     console.log('i donnot do this')
-              //     success(img)
-              // }
-              images_upload_handler: (url, success) => {
-               this.pictureUpload();
-               console.log('我又又又在在这里了');
-               var url="http://localhost:8080"+"/jeecg-boot"+"/sys/common/upload";
-               const img = url
-               console.log('i donnot do this')
-               success(img)
-              }
+             //images_upload_handler: (blobInfo, success) => {
+               //   const img = 'data:image/jpeg;base64,' + blobInfo.base64()
+                 //    success(img)
+              //}
+            images_upload_url:serverPath+"/jeecg-boot"+"/sys/common/uploadImg"
 
-          },
+       },
           myValue:this.value,
+      /****************************************************************************************************/
         title:"操作",
         visible: false,
         model: {},
@@ -155,18 +149,21 @@
         url: {
           add: "/text/text/add",
           edit: "/text/text/edit",
-          fileUpload:window._CONFIG['domianURL']+"/sys/common/upload",
+          uploadAction:serverPath+"/jeecg-boot"+"/sys/common//uploadImg",
         },
       }
     },
+    /********************************************************************************/
       mounted() {
-          tinymce.init({})
+          tinymce.init({
+          })
       },
+    /********************************************************************************/
+
     created () {
-        const token = Vue.ls.get(ACCESS_TOKEN);
-        this.headers = {"X-Access-Token":token};
     },
     methods: {
+    /*******************************************************************************/
         onClick(e) {
             this.$emit('onClick', e, tinymce)
         },
@@ -175,15 +172,17 @@
             this.myValue = ''
         },
       pictureUpload(){
-          console.log('我现在在这里了');
-          postAction(this.url.fileUpload).then((res)=>{
-              if(res.success){
-                  console.log(res);
-              }else{
-                  console.log(res.message);
-              }
-          });
+        console.log('我现在在这里了');
+        postAction(this.url.uploadAction).then((res)=>{
+          if(res.success){
+            console.log(res);
+          }else{
+            console.log(res.message);
+          }
+        });
       },
+    /*******************************************************************************/
+
 
       add () {
         this.edit({});
