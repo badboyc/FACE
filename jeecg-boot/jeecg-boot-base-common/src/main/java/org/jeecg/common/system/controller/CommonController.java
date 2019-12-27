@@ -116,7 +116,7 @@ public class CommonController {
 			String ip = InetAddress.getLocalHost().getHostAddress();
 			int port=request.getLocalPort(); //获取服务器端口
 //			String ip = InetAddress.getLocalHost().getHostAddress();
-			String filePath ="http://"+ip+":3001/jeecg-boot/sys/common/download/"+ dbpath;
+			String filePath ="http://"+ip+":3000/jeecg-boot/sys/common/download/"+ dbpath;
 			ret.put("location", filePath);
 		} catch (IOException e) {
 			log.error(e.getMessage(), e);

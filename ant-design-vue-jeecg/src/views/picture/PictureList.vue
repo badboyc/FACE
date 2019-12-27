@@ -1,49 +1,13 @@
 <template>
   <a-card :bordered="false">
-
-    <!-- 查询区域 -->
-    <div class="table-page-search-wrapper">
-      <a-form layout="inline">
-        <a-row :gutter="24">
-
-          <a-col :md="6" :sm="8">
-            <a-form-item label="url">
-              <a-input placeholder="请输入url" v-model="queryParam.url"></a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :md="6" :sm="8">
-            <a-form-item label="type">
-              <a-input placeholder="请输入type" v-model="queryParam.type"></a-input>
-            </a-form-item>
-          </a-col>
-
-          <a-col :md="6" :sm="8" >
-            <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
-              <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
-              <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
-              <a @click="handleToggleSearch" style="margin-left: 8px">
-                {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
-              </a>
-            </span>
-          </a-col>
-
-        </a-row>
-      </a-form>
-    </div>
-
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls('图片编辑')">导出</a-button>
-      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
-        <a-button type="primary" icon="import">导入</a-button>
-      </a-upload>
+
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
         </a-menu>
-        <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down" /></a-button>
       </a-dropdown>
     </div>
 
@@ -107,7 +71,7 @@
         // 表头
         columns: [
           {
-            title: '#',
+            title: '图片编号',
             dataIndex: '',
             key:'rowIndex',
             width:60,
@@ -115,16 +79,6 @@
             customRender:function (t,r,index) {
               return parseInt(index)+1;
             }
-           },
-		   {
-            title: 'url',
-            align:"center",
-            dataIndex: 'url'
-           },
-		   {
-            title: 'type',
-            align:"center",
-            dataIndex: 'type'
            },
             {
                 title: '发布人',
@@ -136,6 +90,11 @@
                 align:"center",
                 dataIndex: 'createTime'
             },
+          {
+            title: '图片路径',
+            align:"center",
+            dataIndex: 'pictureurl'
+          },
 
           {
             title: '操作',
@@ -159,7 +118,7 @@
     }
   },
     methods: {
-     
+
     }
   }
 </script>

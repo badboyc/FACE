@@ -74,7 +74,7 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/text/text/list", "anon");
 		filterChainDefinitionMap.put("/doc/doc/list", "anon");
 		filterChainDefinitionMap.put("/sys/common/uploadImg", "anon");
-        filterChainDefinitionMap.put("/sys/common/upload", "anon");
+		filterChainDefinitionMap.put("/picture/picture/list", "anon");
 
 		// update-begin--Author:sunjianlei Date:20190813 for：排除字体格式的后缀
 		filterChainDefinitionMap.put("/**/*.ttf", "anon");
