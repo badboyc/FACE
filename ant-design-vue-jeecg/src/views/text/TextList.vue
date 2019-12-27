@@ -16,10 +16,12 @@
               <a-input placeholder="请输入文本类型" v-model="queryParam.type"></a-input>
             </a-form-item>-->
             <a-form-item label="文本类型">
-              <a-select v-model="queryParam.type" placeholder="请输入文本类型">
-                <a-select-option value="1">新闻</a-select-option>
-                <a-select-option value="2">简介</a-select-option>
-                <a-select-option value="3">图片</a-select-option>
+              <a-select v-model="queryParam.type" placeholder="请输入文本类型" >
+                <a-select-option v-for="(item, key) in textType" :key="key" :value="item.value">
+              <span style="display: inline-block;width: 100%" :title=" item.text || item.label ">
+                {{ item.text || item.label }}
+              </span>
+                </a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
@@ -103,6 +105,7 @@
 <script>
   import TextModal from './modules/TextModal'
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
+  import {initDictOptions, filterDictText} from '@/components/dict/JDictSelectUtil'
 
   export default {
     name: "TextList",
@@ -133,8 +136,11 @@
 		   {
             title: '文本类型',
             align:"center",
-            dataIndex: 'type'
-           },
+            dataIndex: 'type',
+           customRender:(text, record, index) => {
+             return filterDictText(this.textType,text);
+           }
+         },
             {
                 title: '发布人',
                 align:"center",
@@ -161,13 +167,24 @@
        },
     }
   },
+      created(){
+          this.initDictConfig();
+      },
+
   computed: {
     importExcelUrl: function(){
       return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
     }
   },
     methods: {
-     
+        initDictConfig() {
+            //初始化字典 - 处理状态
+            initDictOptions('text_type').then((res) => {
+                if (res.success) {
+                    this.textType = res.result;
+                }
+            });
+        },
     }
   }
 </script>
