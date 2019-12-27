@@ -27,15 +27,15 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 @Accessors(chain = true)
 @ApiModel(value="picture对象", description="图片编辑")
 public class Picture {
-    
+
 	/**id*/
 	@TableId(type = IdType.UUID)
     @ApiModelProperty(value = "id")
 	private java.lang.String id;
 	/**url*/
-	@Excel(name = "url", width = 15)
-    @ApiModelProperty(value = "url")
-	private java.lang.String url;
+	@Excel(name = "pictureurl", width = 15)
+    @ApiModelProperty(value = "pictureurl")
+	private java.lang.String pictureurl;
 	/**createBy*/
 	@Excel(name = "createBy", width = 15)
     @ApiModelProperty(value = "createBy")

@@ -7,13 +7,13 @@
     @ok="handleOk"
     @cancel="handleCancel"
     cancelText="关闭">
-    
+
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="url">
+          label="上传图片">
           <!--<a-input placeholder="请输入url" v-decorator="['url', {}]" />-->
           <a-upload
             name="file"
@@ -32,10 +32,10 @@
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="type">
-          <a-input placeholder="请输入type" v-decorator="['type', {}]" />
+          label="备注">
+          <a-input placeholder="请输入备注" v-decorator="['type', {}]" />
         </a-form-item>
-		
+
       </a-form>
     </a-spin>
   </a-modal>
@@ -98,7 +98,7 @@
           urlDownload:serverPath +"/jeecg-boot"+ "/sys/download/download/",
           headers:{},
           fileList: [],
-          pictureUrl:''
+          pictureurl:''
 
           /******************************************************************************************/
       }
@@ -147,15 +147,15 @@
     },
     methods: {
       add () {
-        this.edit({});
-        this.pictureUrl=''
+        this.pictureurl='';
+        this.edit({})
       },
       edit (record) {
         this.form.resetFields();
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'url','type'))
+          this.form.setFieldsValue(pick(this.model,'pictureurl','type'))
 		  //时间格式化
         });
 
@@ -226,7 +226,7 @@
                     fileList = fileList.map((file) => {
                         if (file.response) {
                             file.url = this.urlDownload + file.response.message;
-                            this.pictureUrl = file.url;
+                            this.pictureurl = file.url;
                         }
                         return file;
                     });
@@ -252,6 +252,7 @@
       close () {
         this.$emit('close');
         this.visible = false;
+        this.fileList = [];
       },
       handleOk () {
         const that = this;
@@ -269,9 +270,9 @@
                method = 'put';
             }
             let formData = Object.assign(this.model, values);
-            formData.url = this.pictureUrl;
+            formData.pictureurl = this.pictureurl;
             //时间格式化
-            
+
             console.log(formData)
             httpAction(httpurl,formData,method).then((res)=>{
               if(res.success){
