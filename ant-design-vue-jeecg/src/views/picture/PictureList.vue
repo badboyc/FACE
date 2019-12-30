@@ -93,7 +93,7 @@
           {
             title: '图片路径',
             align:"center",
-            dataIndex: 'pictureurl'
+            dataIndex: 'url'
           },
 
           {

@@ -23,9 +23,11 @@
           label="文本类型">
           <!--<a-input-number v-decorator="[ 'type', {}]" />-->
           <a-select v-decorator="[ 'type', {}]" placeholder="请输入文本类型">
-            <a-select-option :value="1">新闻</a-select-option>
-            <a-select-option :value="2">简介</a-select-option>
-            <a-select-option :value="3">图片</a-select-option>
+            <a-select-option v-for="(item, key) in textType" :key="key" :value="item.value">
+              <span style="display: inline-block;width: 100%" :title=" item.text || item.label ">
+                {{ item.text || item.label }}
+              </span>
+            </a-select-option>
           </a-select>
         </a-form-item>
         <!--<a-form-item
@@ -77,6 +79,7 @@
   import 'tinymce/plugins/fullscreen'
   import '@/views/jeecg/JUpload'
   import moment from "moment"
+  import {initDictOptions} from "../../../components/dict/JDictSelectUtil";
   var urlPath = window.document.location.href;
   var docPath = window.document.location.pathname;
   var index = urlPath.indexOf(docPath);
@@ -130,6 +133,7 @@
        },
           myValue:this.value,
       /****************************************************************************************************/
+        textType:[],
         title:"操作",
         visible: false,
         model: {},
@@ -161,9 +165,17 @@
     /********************************************************************************/
 
     created () {
+        this.initDictConfig();
     },
     methods: {
     /*******************************************************************************/
+        initDictConfig() {
+            initDictOptions('text_type').then((res) => {
+                if (res.success) {
+                    this.textType = res.result;
+                }
+            });
+        },
         onClick(e) {
             this.$emit('onClick', e, tinymce)
         },

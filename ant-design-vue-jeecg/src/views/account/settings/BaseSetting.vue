@@ -4,7 +4,7 @@
       <a-form :form="form">
 
         <a-form-item label="用户账号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input placeholder="请输入用户账号" v-decorator="[ 'username', validatorRules.username]" :readOnly="!!model.id"/>
+          <a-input placeholder="请输入用户账号" v-decorator="[ 'username', validatorRules.username]" :readOnly="!!model.username"/>
         </a-form-item>
         <a-form-item label="昵称" :labelCol="labelCol" :wrapperCol="wrapperCol" >
           <a-input placeholder="请输入昵称" v-decorator="[ 'realname', validatorRules.realname]" />
