@@ -12,12 +12,6 @@
         <span v-if="isDesktop()">欢迎您，{{ nickname() }}</span>
       </span>
       <a-menu slot="overlay" class="user-dropdown-menu-wrapper">
-        <a-menu-item key="0">
-          <router-link :to="{ name: 'account-center' }">
-            <a-icon type="user"/>
-            <span>个人中心</span>
-          </router-link>
-        </a-menu-item>
         <a-menu-item key="1">
           <router-link :to="{ name: 'account-settings-base' }">
             <a-icon type="setting"/>
@@ -31,10 +25,6 @@
         <a-menu-item key="4" @click="updatePassword">
           <a-icon type="setting"/>
           <span>密码修改</span>
-        </a-menu-item>
-        <a-menu-item key="5" @click="updateCurrentDepart">
-          <a-icon type="cluster"/>
-          <span>切换部门</span>
         </a-menu-item>
        <!-- <a-menu-item key="2" disabled>
           <a-icon type="setting"/>
@@ -55,7 +45,8 @@
         <span v-if="isDesktop()">&nbsp;退出登录</span>
       </a>
     </span>
-    <user-password ref="userPassword"></user-password>
+   <!-- <user-password ref="userPassword"></user-password>-->
+    <password-modal ref="passwordmodal" @ok="passwordModalOk"></password-modal>
     <depart-select ref="departSelect" :closable="true" title="部门切换"></depart-select>
     <setting-drawer ref="settingDrawer" :closable="true" title="系统设置"></setting-drawer>
   </div>
@@ -64,6 +55,7 @@
 <script>
   import HeaderNotice from './HeaderNotice'
   import UserPassword from './UserPassword'
+  import PasswordModal from '@/views/system/modules/PasswordModal'
   import SettingDrawer from "@/components/setting/SettingDrawer"
   import DepartSelect from './DepartSelect'
   import { mapActions, mapGetters } from 'vuex'
@@ -75,6 +67,7 @@
     components: {
       HeaderNotice,
       UserPassword,
+      PasswordModal,
       DepartSelect,
       SettingDrawer
     },
@@ -115,14 +108,19 @@
       },
       updatePassword(){
         let username = this.userInfo().username
-        this.$refs.userPassword.show(username)
+        // this.$refs.userPassword.show(username)
+        this.$refs.passwordmodal.show(username);
       },
       updateCurrentDepart(){
         this.$refs.departSelect.show()
       },
       systemSetting(){
         this.$refs.settingDrawer.showDrawer()
-      }
+      },
+        passwordModalOk() {
+            //TODO 密码修改完成 不需要刷新页面，可以把datasource中的数据更新一下
+        }
+
     }
   }
 </script>
