@@ -53,17 +53,19 @@
         <a-form-item label="工作流引擎" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <j-dict-select-tag  v-decorator="['activitiSync', {}]" placeholder="请选择是否同步工作流引擎" :type="'radio'" :triggerChange="true" dictCode="activiti_sync"/>
         </a-form-item>
-
       </a-form>
     </a-spin>
     <depart-window ref="departWindow" @ok="modalFormOk"></depart-window>
-
+  <a-form-item :wrapper-col="{ span:6, offset: 9}">
     <div class="drawer-bootom-button" v-show="!disableSubmit">
-      <a-popconfirm title="确定放弃编辑？" @confirm="handleCancel" okText="确定" cancelText="取消">
-        <a-button style="margin-right: .8rem">取消</a-button>
-      </a-popconfirm>
-      <a-button @click="handleSubmit" type="primary" :loading="confirmLoading">提交</a-button>
+     <!-- <a-popconfirm title="确定放弃编辑？" @confirm="handleCancel" okText="确定" cancelText="取消">
+      </a-popconfirm>-->
+
+      <a-button @click="handleSubmit" type="primary" :loading="confirmLoading">提交修改</a-button>
+
     </div>
+  </a-form-item>
+
 </div>
 </template>
 

@@ -37,10 +37,10 @@
         </template>
 
         <a-form-item label="用户名字" :labelCol="labelCol" :wrapperCol="wrapperCol" >
-          <a-input placeholder="请输入用户名称" v-decorator="[ 'realname', validatorRules.realname]" />
+          <a-input placeholder="请输入用户名称" v-decorator="[ 'realname', validatorRules.realname]" :readOnly="!!model.id" />
         </a-form-item>
 
-        <a-form-item label="角色分配" :labelCol="labelCol" :wrapperCol="wrapperCol" v-show="!roleDisabled" >
+        <a-form-item label="角色分配" :labelCol="labelCol" :wrapperCol="wrapperCol" v-show="!roleDisabled" :readOnly="!!model.id">
           <a-select
             mode="multiple"
             style="width: 100%"
@@ -63,45 +63,47 @@
             <a-button slot="enterButton" icon="search">选择</a-button>
           </a-input-search>
         </a-form-item>
-        <a-form-item label="头像" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-upload
-            listType="picture-card"
-            class="avatar-uploader"
-            :showUploadList="false"
-            :action="uploadAction"
-            :data="{'isup':1}"
-            :headers="headers"
-            :beforeUpload="beforeUpload"
-            @change="handleChange"
-          >
-            <img v-if="picUrl" :src="getAvatarView()" alt="头像" style="height:104px;max-width:300px"/>
-            <div v-else>
-              <a-icon :type="uploadLoading ? 'loading' : 'plus'" />
-              <div class="ant-upload-text">上传</div>
-            </div>
-          </a-upload>
-        </a-form-item>
+        <!--<a-form-item label="头像" :labelCol="labelCol" :wrapperCol="wrapperCol">-->
+          <!--<a-upload-->
+            <!--listType="picture-card"-->
+            <!--class="avatar-uploader"-->
+            <!--:showUploadList="false"-->
+            <!--:action="uploadAction"-->
+            <!--:data="{'isup':1}"-->
+            <!--:headers="headers"-->
+            <!--:beforeUpload="beforeUpload"-->
+            <!--@change="handleChange"-->
+          <!--&gt;-->
+            <!--<img v-if="picUrl" :src="getAvatarView()" alt="头像" style="height:104px;max-width:300px"/>-->
+            <!--<div v-else>-->
+              <!--<a-icon :type="uploadLoading ? 'loading' : 'plus'" />-->
+              <!--<div class="ant-upload-text">上传</div>-->
+            <!--</div>-->
+          <!--</a-upload>-->
+        <!--</a-form-item>-->
 
         <a-form-item label="生日" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-date-picker
-            style="width: 100%"
-            placeholder="请选择生日"
-            v-decorator="['birthday', {initialValue:!model.birthday?null:moment(model.birthday,dateFormat)}]"/>
+          <!--<a-date-picker-->
+            <!--style="width: 100%"-->
+            <!--placeholder="请选择生日"-->
+            <!--v-decorator="['birthday', {initialValue:!model.birthday?null:moment(model.birthday,dateFormat)}]" :readOnly="!!model.id"/>-->
+          <a-input placeholder="请输入生日" v-decorator="[ 'birthday', {initialValue:model.birthday}]" :readOnly="!!model.id"/>
         </a-form-item>
 
         <a-form-item label="性别" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-select v-decorator="[ 'sex', {}]" placeholder="请选择性别">
+          <a-select v-decorator="[ 'sex', {}]" placeholder="请选择性别" disabled="disabled" >
             <a-select-option :value="1">男</a-select-option>
             <a-select-option :value="2">女</a-select-option>
           </a-select>
+         <!--<a-input placeholder="请输入性别" v-decorator="[ 'sex', {initialValue:model.sex==1 ? '男' : '女' }]" :readOnly="!!model.id"/>-->
         </a-form-item>
 
         <a-form-item label="邮箱" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input placeholder="请输入邮箱" v-decorator="[ 'email', validatorRules.email]" />
+          <a-input placeholder="请输入邮箱" v-decorator="[ 'email', validatorRules.email]" :readOnly="!!model.id"/>
         </a-form-item>
 
         <a-form-item label="手机号码" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input placeholder="请输入手机号码" :disabled="isDisabledAuth('user:form:phone')" v-decorator="[ 'phone', validatorRules.phone]" />
+          <a-input placeholder="请输入手机号码" :disabled="isDisabledAuth('user:form:phone')" v-decorator="[ 'phone', validatorRules.phone]":readOnly="!!model.id" />
         </a-form-item>
 
         <a-form-item label="工作流引擎" :labelCol="labelCol" :wrapperCol="wrapperCol">

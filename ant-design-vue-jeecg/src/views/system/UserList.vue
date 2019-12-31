@@ -126,13 +126,13 @@
               更多 <a-icon type="down"/>
             </a>
             <a-menu slot="overlay">
-              <a-menu-item>
-                <a href="javascript:;" @click="handleDetail(record)">详情</a>
-              </a-menu-item>
+              <!--<a-menu-item>-->
+                <!--<a href="javascript:;" @click="handleDetail(record)">详情</a>-->
+              <!--</a-menu-item>-->
 
-              <a-menu-item>
+              <!--<a-menu-item>
                 <a href="javascript:;" @click="handleChangePassword(record.username)">密码</a>
-              </a-menu-item>
+              </a-menu-item>-->
 
               <a-menu-item>
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -152,9 +152,9 @@
                 </a-popconfirm>
               </a-menu-item>
 
-              <a-menu-item>
+              <!--<a-menu-item>
                 <a href="javascript:;" @click="handleAgentSettings(record.username)">代理人</a>
-              </a-menu-item>
+              </a-menu-item>-->
 
             </a-menu>
           </a-dropdown>
